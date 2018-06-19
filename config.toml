@@ -264,12 +264,12 @@ enableGitInfo = false
 
 [[menu.main]]
   name = "CV"
-  url = "https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing"
+  url = "https://drive.google.com/file/d/1oZgY_bxmXP2-KaPnL61Z1FMNUAPWvmkN/view?usp=sharing"
   weight = 3
 
 [[menu.main]]
   name = "Resume"
-  url = "https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing"
+  url = "https://drive.google.com/file/d/1HAkb1XARDiTgtujeNKfv9v0GNGLmevLW/view?usp=sharing"
   weight = 4
 
 [[menu.main]]
