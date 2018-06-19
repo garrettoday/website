@@ -253,13 +253,13 @@ enableGitInfo = false
   align_right = true
 
 [[menu.main]]
-  name = "Home"
+  name = "About"
   url = "#about"
   weight = 1
 
 [[menu.main]]
   name = "Research"
-  url = "#research"
+  url = "/research"
   weight = 2
 
 [[menu.main]]
@@ -274,17 +274,17 @@ enableGitInfo = false
 
 [[menu.main]]
   name = "Projects"
-  url = "#projects"
+  url = "/projects"
   weight = 5
 
 [[menu.main]]
   name = "Resources"
-  url = "#resources"
+  url = "/resources"
   weight = 6
   
 [[menu.main]]
   name = "Hobbies"
-  url = "#hobbies"
+  url = "/hobbies"
   weight = 7
 
 # Taxonomies.

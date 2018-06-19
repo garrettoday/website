@@ -236,16 +236,6 @@ git submodule update --init --recursive
     </item>
     
     <item>
-      <title>A Person Re-Identification System For Mobile Devices</title>
-      <link>/publication/person-re-identification/</link>
-      <pubDate>Tue, 01 Sep 2015 00:00:00 -0400</pubDate>
-      
-      <guid>/publication/person-re-identification/</guid>
-      <description>&lt;p&gt;More detail can easily be written here using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Hello R Markdown</title>
       <link>/post/2015-07-23-r-rmarkdown/</link>
       <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
@@ -294,12 +284,1064 @@ Figure 1: A fancy pie chart.
     </item>
     
     <item>
-      <title>Mobile visual clothing search</title>
-      <link>/publication/clothing-search/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 -0400</pubDate>
+      <title></title>
+      <link>/hobbies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/publication/clothing-search/</guid>
-      <description>&lt;p&gt;More detail can easily be written here using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+      <guid>/hobbies/</guid>
+      <description>&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en-us&#34;&gt;
+&lt;head&gt;
+
+  &lt;meta charset=&#34;utf-8&#34;&gt;
+  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
+  &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;IE=edge&#34;&gt;
+  &lt;meta name=&#34;theme&#34; content=&#34;hugo-academic&#34;&gt;
+  &lt;meta name=&#34;generator&#34; content=&#34;Hugo 0.41&#34; /&gt;
+  &lt;meta name=&#34;author&#34; content=&#34;Garrett O&amp;#39;Day&#34;&gt;
+
+
+
+
+
+  &lt;meta name=&#34;description&#34; content=&#34;Graduate Researcher&#34;&gt;
+
+
+  &lt;link rel=&#34;alternate&#34; hreflang=&#34;en-us&#34; href=&#34;/hobbies/&#34;&gt;
+
+
+
+
+
+
+
+
+  &lt;meta name=&#34;theme-color&#34; content=&#34;#3f51b5&#34;&gt;
+
+
+
+
+
+
+
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34; integrity=&#34;sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css&#34; integrity=&#34;sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&#34; integrity=&#34;sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css&#34; integrity=&#34;sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=&#34; crossorigin=&#34;anonymous&#34;&gt;
+
+
+
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&amp;#43;Mono&#34;&gt;
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;/styles.css&#34;&gt;
+
+
+
+
+
+  &lt;link rel=&#34;alternate&#34; href=&#34;/hobbies/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;link rel=&#34;feed&#34; href=&#34;/hobbies/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+
+
+  &lt;link rel=&#34;manifest&#34; href=&#34;/site.webmanifest&#34;&gt;
+  &lt;link rel=&#34;icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon.png&#34;&gt;
+  &lt;link rel=&#34;apple-touch-icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon-192.png&#34;&gt;
+
+  &lt;link rel=&#34;canonical&#34; href=&#34;/hobbies/&#34;&gt;
+
+  &lt;meta property=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
+
+  &lt;meta property=&#34;twitter:site&#34; content=&#34;@GeorgeCushen&#34;&gt;
+  &lt;meta property=&#34;twitter:creator&#34; content=&#34;@GeorgeCushen&#34;&gt;
+
+  &lt;meta property=&#34;og:site_name&#34; content=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;meta property=&#34;og:url&#34; content=&#34;/hobbies/&#34;&gt;
+  &lt;meta property=&#34;og:title&#34; content=&#34;Hobbies | Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;meta property=&#34;og:description&#34; content=&#34;Graduate Researcher&#34;&gt;
+  &lt;meta property=&#34;og:locale&#34; content=&#34;en-us&#34;&gt;
+
+  &lt;meta property=&#34;og:updated_time&#34; content=&#34;2017-01-01T00:00:00-05:00&#34;&gt;
+
+
+
+
+
+  &lt;title&gt;Hobbies | Garrett M. O&amp;#39;Day&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body id=&#34;top&#34; data-spy=&#34;scroll&#34; data-target=&#34;#toc&#34; data-offset=&#34;71&#34; &gt;
+
+&lt;nav class=&#34;navbar navbar-default navbar-fixed-top&#34; id=&#34;navbar-main&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+
+
+    &lt;div class=&#34;navbar-header&#34;&gt;
+
+      &lt;button type=&#34;button&#34; class=&#34;navbar-toggle collapsed&#34; data-toggle=&#34;collapse&#34;
+              data-target=&#34;.navbar-collapse&#34; aria-expanded=&#34;false&#34;&gt;
+        &lt;span class=&#34;sr-only&#34;&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+
+      &lt;a class=&#34;navbar-brand&#34; href=&#34;/&#34;&gt;Garrett M. O&amp;#39;Day&lt;/a&gt;
+    &lt;/div&gt;
+
+
+    &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
+
+
+
+      &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;/#about&#34;&gt;
+
+            &lt;span&gt;About&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;/research&#34;&gt;
+
+            &lt;span&gt;Research&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+            &lt;span&gt;CV&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+            &lt;span&gt;Resume&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;/projects&#34;&gt;
+
+            &lt;span&gt;Projects&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;/resources&#34;&gt;
+
+            &lt;span&gt;Resources&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+        &lt;li class=&#34;nav-item&#34;&gt;
+          &lt;a href=&#34;/hobbies&#34;&gt;
+
+            &lt;span&gt;Hobbies&lt;/span&gt;
+
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+
+
+
+
+      &lt;/ul&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+
+
+
+
+&lt;div class=&#34;universal-wrapper&#34;&gt;
+
+  &lt;h1&gt; &lt;center&gt; &lt;br&gt; Hobbies &lt;center&gt; &lt;/h1&gt;
+
+
+
+
+
+  &lt;h2 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;
+    &lt;a href=&#34;/hobbies/woodworking/&#34; itemprop=&#34;url&#34;&gt;Woodworking&lt;/a&gt;
+    &lt;br&gt; &lt;br&gt;
+    &lt;a href=&#34;/2018-06-04-reading/&#34; itemprop=&#34;url&#34;&gt;Reading&lt;/a&gt;
+    &lt;br&gt; &lt;br&gt;
+    &lt;a href=&#34;/hobbies/2018-06-04-other/&#34; itemprop=&#34;url&#34;&gt;Other&lt;/a&gt;
+  &lt;/h2&gt;
+  &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
+
+    &lt;li&gt;&lt;a href=&#34;/post/getting-started/&#34;&gt;Academic: the website designer for Hugo&lt;/a&gt;&lt;/li&gt;
+
+    &lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
+
+&lt;footer class=&#34;site-footer&#34;&gt;
+&lt;/footer&gt;
+
+
+&lt;div id=&#34;modal&#34; class=&#34;modal fade&#34; role=&#34;dialog&#34;&gt;
+  &lt;div class=&#34;modal-dialog&#34;&gt;
+    &lt;div class=&#34;modal-content&#34;&gt;
+      &lt;div class=&#34;modal-header&#34;&gt;
+        &lt;button type=&#34;button&#34; class=&#34;close btn-large&#34; data-dismiss=&#34;modal&#34;&gt;&amp;times;&lt;/button&gt;
+        &lt;h4 class=&#34;modal-title&#34;&gt;Cite&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;pre&gt;&lt;code class=&#34;modal-body tex&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;modal-footer&#34;&gt;
+        &lt;a class=&#34;btn btn-primary btn-outline js-copy-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
+          &lt;i class=&#34;fa fa-copy&#34;&gt;&lt;/i&gt; Copy
+        &lt;/a&gt;
+        &lt;a class=&#34;btn btn-primary btn-outline js-download-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
+          &lt;i class=&#34;fa fa-download&#34;&gt;&lt;/i&gt; Download
+        &lt;/a&gt;
+        &lt;div id=&#34;modal-error&#34;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&#34; integrity=&#34;sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js&#34; integrity=&#34;sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js&#34; integrity=&#34;sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js&#34; integrity=&#34;sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js&#34; integrity=&#34;sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+
+
+    &lt;script src=&#34;/js/hugo-academic.js&#34;&gt;&lt;/script&gt;
+
+
+
+
+
+
+
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/</guid>
+      <description>&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en-us&#34;&gt;
+&lt;head&gt;
+
+  &lt;meta charset=&#34;utf-8&#34;&gt;
+  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
+  &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;IE=edge&#34;&gt;
+  &lt;meta name=&#34;theme&#34; content=&#34;hugo-academic&#34;&gt;
+  &lt;meta name=&#34;generator&#34; content=&#34;Hugo 0.41&#34; /&gt;
+  &lt;meta name=&#34;author&#34; content=&#34;Garrett O&amp;#39;Day&#34;&gt;
+
+
+
+
+
+  &lt;meta name=&#34;description&#34; content=&#34;Graduate Researcher&#34;&gt;
+
+
+  &lt;link rel=&#34;alternate&#34; hreflang=&#34;en-us&#34; href=&#34;/projects/&#34;&gt;
+
+
+
+
+
+
+
+
+  &lt;meta name=&#34;theme-color&#34; content=&#34;#3f51b5&#34;&gt;
+
+
+
+
+
+
+
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34; integrity=&#34;sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css&#34; integrity=&#34;sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&#34; integrity=&#34;sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css&#34; integrity=&#34;sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=&#34; crossorigin=&#34;anonymous&#34;&gt;
+
+
+
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&amp;#43;Mono&#34;&gt;
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;/styles.css&#34;&gt;
+
+
+
+
+
+  &lt;link rel=&#34;alternate&#34; href=&#34;/projects/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;link rel=&#34;feed&#34; href=&#34;/projects/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+
+
+  &lt;link rel=&#34;manifest&#34; href=&#34;/site.webmanifest&#34;&gt;
+  &lt;link rel=&#34;icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon.png&#34;&gt;
+  &lt;link rel=&#34;apple-touch-icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon-192.png&#34;&gt;
+
+  &lt;link rel=&#34;canonical&#34; href=&#34;/projects/&#34;&gt;
+
+  &lt;meta property=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
+
+  &lt;meta property=&#34;twitter:site&#34; content=&#34;@GeorgeCushen&#34;&gt;
+  &lt;meta property=&#34;twitter:creator&#34; content=&#34;@GeorgeCushen&#34;&gt;
+
+  &lt;meta property=&#34;og:site_name&#34; content=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;meta property=&#34;og:url&#34; content=&#34;/projects/&#34;&gt;
+  &lt;meta property=&#34;og:title&#34; content=&#34;Research | Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;meta property=&#34;og:description&#34; content=&#34;Graduate Researcher&#34;&gt;
+  &lt;meta property=&#34;og:locale&#34; content=&#34;en-us&#34;&gt;
+
+  &lt;meta property=&#34;og:updated_time&#34; content=&#34;2017-01-01T00:00:00-05:00&#34;&gt;
+
+
+
+
+
+  &lt;title&gt;Research | Garrett M. O&amp;#39;Day&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body id=&#34;top&#34; data-spy=&#34;scroll&#34; data-target=&#34;#toc&#34; data-offset=&#34;71&#34; &gt;
+
+&lt;nav class=&#34;navbar navbar-default navbar-fixed-top&#34; id=&#34;navbar-main&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+
+
+    &lt;div class=&#34;navbar-header&#34;&gt;
+
+      &lt;button type=&#34;button&#34; class=&#34;navbar-toggle collapsed&#34; data-toggle=&#34;collapse&#34;
+              data-target=&#34;.navbar-collapse&#34; aria-expanded=&#34;false&#34;&gt;
+        &lt;span class=&#34;sr-only&#34;&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+
+      &lt;a class=&#34;navbar-brand&#34; href=&#34;/&#34;&gt;Garrett M. O&amp;#39;Day&lt;/a&gt;
+    &lt;/div&gt;
+
+
+    &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
+
+
+
+      &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/#about&#34;&gt;
+
+                    &lt;span&gt;About&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/research&#34;&gt;
+
+                    &lt;span&gt;Research&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+                    &lt;span&gt;CV&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+                    &lt;span&gt;Resume&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/projects&#34;&gt;
+
+                    &lt;span&gt;Projects&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/resources&#34;&gt;
+
+                    &lt;span&gt;Resources&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/hobbies&#34;&gt;
+
+                    &lt;span&gt;Hobbies&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+      &lt;/ul&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+
+
+
+
+&lt;div class=&#34;universal-wrapper&#34;&gt;
+
+  &lt;h1&gt; &lt;center&gt; &lt;br&gt; Projects &lt;/center&gt; &lt;/h1&gt;
+
+
+  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;Manuscripts in Preparation&lt;/h3&gt;
+    &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
+      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J.D. (in preparation). Combining and Compairing Concept Mapping and Retrieval Practice.
+      &lt;/p&gt;
+
+      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J.D. (in preparation). Does self-scoring enhance learning?
+      &lt;/p&gt;
+
+      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, Nunes, L. D., &amp; Karpicke, J.D. (in preparation). Students don’t self-test with
+      peer-generated questions.
+      &lt;/p&gt;
+
+      &lt;p&gt;Coverdale, M. E., &lt;b&gt;O’Day, G. M.&lt;/b&gt;, Nairne, J. S., &amp; Karpicke, J. D. (in preparation). Using survival
+      processing to enhance retrieval practice.
+    &lt;/p&gt;
+    &lt;/div&gt;
+
+
+
+
+  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;Conference Presentations&lt;/h3&gt;
+    &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
+      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J. D. (November 2017). Does Self-Scoring Enhance Learning?
+      Poster presented at the Psychonomic Society Annual Meeting, Vancouver, Canada. &lt;a href=&#34;url&#34;&gt;[Poster]&lt;/a&gt;
+
+      &lt;/p&gt;
+
+      &lt;p&gt;Ritchey, M., Gruber, M.J., Dhillon, A.S., &lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Ranganath, C. (November 2016).
+      Effects of emotional anticipation on neural oscillations involved in context-guided
+      prediction. Poster presented at the Society for Neuroscience Annual Meeting, San Diego,
+      CA.
+      &lt;/p&gt;
+    &lt;/div&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div id=&#34;modal&#34; class=&#34;modal fade&#34; role=&#34;dialog&#34;&gt;
+  &lt;div class=&#34;modal-dialog&#34;&gt;
+    &lt;div class=&#34;modal-content&#34;&gt;
+      &lt;div class=&#34;modal-header&#34;&gt;
+        &lt;button type=&#34;button&#34; class=&#34;close btn-large&#34; data-dismiss=&#34;modal&#34;&gt;&amp;times;&lt;/button&gt;
+        &lt;h4 class=&#34;modal-title&#34;&gt;Cite&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;pre&gt;&lt;code class=&#34;modal-body tex&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;modal-footer&#34;&gt;
+        &lt;a class=&#34;btn btn-primary btn-outline js-copy-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
+          &lt;i class=&#34;fa fa-copy&#34;&gt;&lt;/i&gt; Copy
+        &lt;/a&gt;
+        &lt;a class=&#34;btn btn-primary btn-outline js-download-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
+          &lt;i class=&#34;fa fa-download&#34;&gt;&lt;/i&gt; Download
+        &lt;/a&gt;
+        &lt;div id=&#34;modal-error&#34;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&#34; integrity=&#34;sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js&#34; integrity=&#34;sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js&#34; integrity=&#34;sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js&#34; integrity=&#34;sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js&#34; integrity=&#34;sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+
+
+    &lt;script src=&#34;/js/hugo-academic.js&#34;&gt;&lt;/script&gt;
+
+
+
+
+
+
+
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/research/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/research/</guid>
+      <description>&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en-us&#34;&gt;
+&lt;head&gt;
+
+  &lt;meta charset=&#34;utf-8&#34;&gt;
+  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
+  &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;IE=edge&#34;&gt;
+  &lt;meta name=&#34;theme&#34; content=&#34;hugo-academic&#34;&gt;
+  &lt;meta name=&#34;generator&#34; content=&#34;Hugo 0.41&#34; /&gt;
+  &lt;meta name=&#34;author&#34; content=&#34;Garrett O&amp;#39;Day&#34;&gt;
+
+
+
+
+
+  &lt;meta name=&#34;description&#34; content=&#34;Graduate Researcher&#34;&gt;
+
+
+  &lt;link rel=&#34;alternate&#34; hreflang=&#34;en-us&#34; href=&#34;/research/&#34;&gt;
+
+
+
+
+
+
+
+
+  &lt;meta name=&#34;theme-color&#34; content=&#34;#3f51b5&#34;&gt;
+
+
+
+
+
+
+
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34; integrity=&#34;sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css&#34; integrity=&#34;sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&#34; integrity=&#34;sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==&#34; crossorigin=&#34;anonymous&#34;&gt;
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css&#34; integrity=&#34;sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=&#34; crossorigin=&#34;anonymous&#34;&gt;
+
+
+
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&amp;#43;Mono&#34;&gt;
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;/styles.css&#34;&gt;
+
+
+
+
+
+  &lt;link rel=&#34;alternate&#34; href=&#34;/research/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;link rel=&#34;feed&#34; href=&#34;/research/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+
+
+  &lt;link rel=&#34;manifest&#34; href=&#34;/site.webmanifest&#34;&gt;
+  &lt;link rel=&#34;icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon.png&#34;&gt;
+  &lt;link rel=&#34;apple-touch-icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon-192.png&#34;&gt;
+
+  &lt;link rel=&#34;canonical&#34; href=&#34;/research/&#34;&gt;
+
+  &lt;meta property=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
+
+  &lt;meta property=&#34;twitter:site&#34; content=&#34;@GeorgeCushen&#34;&gt;
+  &lt;meta property=&#34;twitter:creator&#34; content=&#34;@GeorgeCushen&#34;&gt;
+
+  &lt;meta property=&#34;og:site_name&#34; content=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;meta property=&#34;og:url&#34; content=&#34;/research/&#34;&gt;
+  &lt;meta property=&#34;og:title&#34; content=&#34;Research | Garrett M. O&amp;#39;Day&#34;&gt;
+  &lt;meta property=&#34;og:description&#34; content=&#34;Graduate Researcher&#34;&gt;
+  &lt;meta property=&#34;og:locale&#34; content=&#34;en-us&#34;&gt;
+
+  &lt;meta property=&#34;og:updated_time&#34; content=&#34;2017-01-01T00:00:00-05:00&#34;&gt;
+
+
+
+
+
+  &lt;title&gt;Research | Garrett M. O&amp;#39;Day&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body id=&#34;top&#34; data-spy=&#34;scroll&#34; data-target=&#34;#toc&#34; data-offset=&#34;71&#34; &gt;
+
+&lt;nav class=&#34;navbar navbar-default navbar-fixed-top&#34; id=&#34;navbar-main&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+
+
+    &lt;div class=&#34;navbar-header&#34;&gt;
+
+      &lt;button type=&#34;button&#34; class=&#34;navbar-toggle collapsed&#34; data-toggle=&#34;collapse&#34;
+              data-target=&#34;.navbar-collapse&#34; aria-expanded=&#34;false&#34;&gt;
+        &lt;span class=&#34;sr-only&#34;&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+
+      &lt;a class=&#34;navbar-brand&#34; href=&#34;/&#34;&gt;Garrett M. O&amp;#39;Day&lt;/a&gt;
+    &lt;/div&gt;
+
+
+    &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
+
+
+
+      &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/#about&#34;&gt;
+
+                    &lt;span&gt;About&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/research&#34;&gt;
+
+                    &lt;span&gt;Research&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+                    &lt;span&gt;CV&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+                    &lt;span&gt;Resume&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/projects&#34;&gt;
+
+                    &lt;span&gt;Projects&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/resources&#34;&gt;
+
+                    &lt;span&gt;Resources&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+                &lt;li class=&#34;nav-item&#34;&gt;
+                  &lt;a href=&#34;/hobbies&#34;&gt;
+
+                    &lt;span&gt;Hobbies&lt;/span&gt;
+
+                  &lt;/a&gt;
+                &lt;/li&gt;
+
+
+
+      &lt;/ul&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+
+
+
+
+&lt;div class=&#34;universal-wrapper&#34;&gt;
+
+  &lt;h1&gt; &lt;center&gt; &lt;br&gt; Research Interests &lt;/center&gt; &lt;/h1&gt;
+
+
+  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;
+    &lt;a href=&#34;/research/getting-started/&#34; itemprop=&#34;url&#34;&gt;Learning Strategies&lt;/a&gt;
+  &lt;/h3&gt;
+  &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
+
+    Academic is a framework to help you create a beautiful website quickly. Perfect for personal sites, blogs, or business/project sites. Check out the latest demo of what you&amp;rsquo;ll get in less than 10 minutes. Then head on over to the Quick Start guide or take a look at the Release Notes.
+
+Key features:
+ Easily manage various content including homepage, blog posts, publications, talks, and projects Extensible via color themes and widgets/plugins Write in Markdown for easy formatting and code highlighting, with LaTeX for mathematical expressions Social/academic network linking, Google Analytics, and Disqus comments Responsive and mobile friendly Simple and refreshing one page design Multilingual and easy to customize  Color Themes Academic is available in different color themes and font themes.
+
+  &lt;/div&gt;
+
+  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;
+    &lt;a href=&#34;/research/getting-started/&#34; itemprop=&#34;url&#34;&gt;Retrieval-based Learning&lt;/a&gt;
+  &lt;/h3&gt;
+  &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
+
+    Academic is a framework to help you create a beautiful website quickly. Perfect for personal sites, blogs, or business/project sites. Check out the latest demo of what you&amp;rsquo;ll get in less than 10 minutes. Then head on over to the Quick Start guide or take a look at the Release Notes.
+
+Key features:
+ Easily manage various content including homepage, blog posts, publications, talks, and projects Extensible via color themes and widgets/plugins Write in Markdown for easy formatting and code highlighting, with LaTeX for mathematical expressions Social/academic network linking, Google Analytics, and Disqus comments Responsive and mobile friendly Simple and refreshing one page design Multilingual and easy to customize  Color Themes Academic is available in different color themes and font themes.
+
+ &lt;br&gt;
+ &lt;br&gt;
+
+  &lt;/div&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;div id=&#34;modal&#34; class=&#34;modal fade&#34; role=&#34;dialog&#34;&gt;
+  &lt;div class=&#34;modal-dialog&#34;&gt;
+    &lt;div class=&#34;modal-content&#34;&gt;
+      &lt;div class=&#34;modal-header&#34;&gt;
+        &lt;button type=&#34;button&#34; class=&#34;close btn-large&#34; data-dismiss=&#34;modal&#34;&gt;&amp;times;&lt;/button&gt;
+        &lt;h4 class=&#34;modal-title&#34;&gt;Cite&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;pre&gt;&lt;code class=&#34;modal-body tex&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;modal-footer&#34;&gt;
+        &lt;a class=&#34;btn btn-primary btn-outline js-copy-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
+          &lt;i class=&#34;fa fa-copy&#34;&gt;&lt;/i&gt; Copy
+        &lt;/a&gt;
+        &lt;a class=&#34;btn btn-primary btn-outline js-download-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
+          &lt;i class=&#34;fa fa-download&#34;&gt;&lt;/i&gt; Download
+        &lt;/a&gt;
+        &lt;div id=&#34;modal-error&#34;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&#34; integrity=&#34;sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js&#34; integrity=&#34;sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js&#34; integrity=&#34;sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js&#34; integrity=&#34;sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js&#34; integrity=&#34;sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+
+
+    &lt;script src=&#34;/js/hugo-academic.js&#34;&gt;&lt;/script&gt;
+
+
+
+
+
+
+
+
+  &lt;/body&gt;
+&lt;/html&gt;
 </description>
     </item>
     

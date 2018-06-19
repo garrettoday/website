@@ -13,6 +13,15 @@
     
     
     <item>
+      <title></title>
+      <link>/resources/</link>
+      <pubDate>Wed, 27 Apr 2016 00:00:00 -0400</pubDate>
+      
+      <guid>/resources/</guid>
+      <description>Coming soon!</description>
+    </item>
+    
+    <item>
       <title>External Project</title>
       <link>/project/example-external-project/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 -0400</pubDate>
