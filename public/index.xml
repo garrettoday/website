@@ -6,7 +6,7 @@
     <description>Recent content in Garrett M. O&#39;Day on Garrett M. O&#39;Day</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2018</copyright>
+    <copyright>&amp;copy; 2019</copyright>
     <lastBuildDate>Sun, 15 Oct 2017 00:00:00 -0400</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
@@ -17,610 +17,6 @@
       
       <guid>/talk/example-talk/</guid>
       <description>&lt;p&gt;Embed your slides or video here using &lt;a href=&#34;https://sourcethemes.com/academic/post/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;shortcodes&lt;/a&gt;. Further details can easily be added using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Deep Learning</title>
-      <link>/project/deep-learning/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 -0400</pubDate>
-      
-      <guid>/project/deep-learning/</guid>
-      <description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.&lt;/p&gt;
-
-&lt;p&gt;Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.&lt;/p&gt;
-
-&lt;p&gt;Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.&lt;/p&gt;
-
-&lt;p&gt;Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.&lt;/p&gt;
-
-&lt;p&gt;Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>External Project</title>
-      <link>/project/example-external-project/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 -0400</pubDate>
-      
-      <guid>/project/example-external-project/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Academic: the website designer for Hugo</title>
-      <link>/post/getting-started/</link>
-      <pubDate>Wed, 20 Apr 2016 00:00:00 -0400</pubDate>
-      
-      <guid>/post/getting-started/</guid>
-      <description>
-
-&lt;p&gt;&lt;strong&gt;Academic&lt;/strong&gt; is a framework to help you create a beautiful website quickly. Perfect for personal sites, blogs, or business/project sites. &lt;a href=&#34;https://themes.gohugo.io/theme/academic/&#34; target=&#34;_blank&#34;&gt;Check out the latest demo&lt;/a&gt; of what you&amp;rsquo;ll get in less than 10 minutes. Then head on over to the &lt;a href=&#34;https://sourcethemes.com/academic/docs/&#34; target=&#34;_blank&#34;&gt;Quick Start guide&lt;/a&gt; or take a look at the &lt;a href=&#34;https://sourcethemes.com/academic/updates/&#34; target=&#34;_blank&#34;&gt;Release Notes&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/gcushen/hugo-academic/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/academic.png&#34; alt=&#34;Screenshot&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Key features:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Easily manage various content including homepage, blog posts, publications, talks, and projects&lt;/li&gt;
-&lt;li&gt;Extensible via &lt;strong&gt;color themes&lt;/strong&gt; and &lt;strong&gt;widgets/plugins&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Write in &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;Markdown&lt;/a&gt; for easy formatting and code highlighting, with &lt;a href=&#34;https://en.wikibooks.org/wiki/LaTeX/Mathematics&#34; target=&#34;_blank&#34;&gt;LaTeX&lt;/a&gt; for mathematical expressions&lt;/li&gt;
-&lt;li&gt;Social/academic network linking, &lt;a href=&#34;https://analytics.google.com&#34; target=&#34;_blank&#34;&gt;Google Analytics&lt;/a&gt;, and &lt;a href=&#34;https://disqus.com&#34; target=&#34;_blank&#34;&gt;Disqus&lt;/a&gt; comments&lt;/li&gt;
-&lt;li&gt;Responsive and mobile friendly&lt;/li&gt;
-&lt;li&gt;Simple and refreshing one page design&lt;/li&gt;
-&lt;li&gt;Multilingual and easy to customize&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;color-themes&#34;&gt;Color Themes&lt;/h2&gt;
-
-&lt;p&gt;Academic is available in different color themes and font themes.&lt;/p&gt;
-
-
-
-&lt;div class=&#34;gallery&#34;&gt;
-  
-  
-  
-  
-    
-  
-  &lt;a data-fancybox=&#34;gallery-1&#34; data-caption=&#34;Default&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-default.png&#34;&gt;
-    &lt;img alt=&#34;&#34; src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-default.png&#34;&gt;
-  &lt;/a&gt;
-  
-  
-  
-  
-    
-  
-  &lt;a data-fancybox=&#34;gallery-1&#34; data-caption=&#34;Ocean&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-ocean.png&#34;&gt;
-    &lt;img alt=&#34;&#34; src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-ocean.png&#34;&gt;
-  &lt;/a&gt;
-  
-  
-  
-  
-    
-  
-  &lt;a data-fancybox=&#34;gallery-1&#34; data-caption=&#34;Dark&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-dark.png&#34;&gt;
-    &lt;img alt=&#34;&#34; src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-dark.png&#34;&gt;
-  &lt;/a&gt;
-  
-  
-  
-  
-    
-  
-  &lt;a data-fancybox=&#34;gallery-1&#34; data-caption=&#34;Default&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-forest.png&#34;&gt;
-    &lt;img alt=&#34;&#34; src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-forest.png&#34;&gt;
-  &lt;/a&gt;
-  
-  
-  
-  
-    
-  
-  &lt;a data-fancybox=&#34;gallery-1&#34; data-caption=&#34;Coffee theme with Playfair font&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-coffee-playfair.png&#34;&gt;
-    &lt;img alt=&#34;&#34; src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-coffee-playfair.png&#34;&gt;
-  &lt;/a&gt;
-  
-  
-  
-  
-    
-  
-  &lt;a data-fancybox=&#34;gallery-1&#34; data-caption=&#34;1950s&#34; href=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-1950s.png&#34;&gt;
-    &lt;img alt=&#34;&#34; src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/images/theme-1950s.png&#34;&gt;
-  &lt;/a&gt;
-  
-&lt;/div&gt;
-
-&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
-
-&lt;p&gt;You can choose from one of the following four methods to install:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;one-click install using your web browser (recommended)&lt;/li&gt;
-&lt;li&gt;install on your computer using Git with the Command Prompt/Terminal app&lt;/li&gt;
-&lt;li&gt;install on your computer by downloading the ZIP files&lt;/li&gt;
-&lt;li&gt;install on your computer with RStudio&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;quick-install-using-your-web-browser&#34;&gt;Quick install using your web browser&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://app.netlify.com/start/deploy?repository=https://github.com/sourcethemes/academic-kickstart&#34; target=&#34;_blank&#34;&gt;Install Academic with Netlify&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Netlify will provide you with a customizable URL to access your new site&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;On GitHub, go to your newly created &lt;code&gt;academic-kickstart&lt;/code&gt; repository and edit &lt;code&gt;config.toml&lt;/code&gt; to personalize your site. Shortly after saving the file, your site will automatically update&lt;/li&gt;
-&lt;li&gt;Read the &lt;a href=&#34;https://sourcethemes.com/academic/docs/&#34; target=&#34;_blank&#34;&gt;Quick Start Guide&lt;/a&gt; to learn how to add Markdown content. For inspiration, refer to the &lt;a href=&#34;https://github.com/gcushen/hugo-academic/tree/master/exampleSite&#34; target=&#34;_blank&#34;&gt;Markdown content&lt;/a&gt; which powers the &lt;a href=&#34;https://themes.gohugo.io/theme/academic/&#34; target=&#34;_blank&#34;&gt;Demo&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;install-with-git&#34;&gt;Install with Git&lt;/h3&gt;
-
-&lt;p&gt;Prerequisites:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://git-scm.com/downloads&#34; target=&#34;_blank&#34;&gt;Download and install Git&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/getting-started/installing/#quick-install&#34; target=&#34;_blank&#34;&gt;Download and install Hugo&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/sourcethemes/academic-kickstart#fork-destination-box&#34; target=&#34;_blank&#34;&gt;Fork&lt;/a&gt; the &lt;em&gt;Academic Kickstart&lt;/em&gt; repository and clone your fork with Git:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git clone https://github.com/sourcethemes/academic-kickstart.git My_Website
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;Note that if you forked Academic Kickstart, the above command should be edited to clone your fork, i.e. replace &lt;code&gt;sourcethemes&lt;/code&gt; with your GitHub username.&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Initialize the theme:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd My_Website
-git submodule update --init --recursive
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;install-with-zip&#34;&gt;Install with ZIP&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/sourcethemes/academic-kickstart/archive/master.zip&#34; target=&#34;_blank&#34;&gt;Download&lt;/a&gt; and extract &lt;em&gt;Academic Kickstart&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/gcushen/hugo-academic/archive/master.zip&#34; target=&#34;_blank&#34;&gt;Download&lt;/a&gt; and extract the &lt;em&gt;Academic theme&lt;/em&gt; to the &lt;code&gt;themes/academic/&lt;/code&gt; folder from the above step&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;install-with-rstudio&#34;&gt;Install with RStudio&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-rstudio&#34; target=&#34;_blank&#34;&gt;View the guide to installing Academic with RStudio&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;quick-start&#34;&gt;Quick start&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;If you installed on your computer, view your new website by running the following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;hugo server
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now visit &lt;a href=&#34;http://localhost:1313&#34; target=&#34;_blank&#34;&gt;localhost:1313&lt;/a&gt; and your new Academic powered website will appear. Otherwise, if using Netlify, they will provide you with your URL.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Read the &lt;a href=&#34;https://sourcethemes.com/academic/docs/&#34; target=&#34;_blank&#34;&gt;Quick Start Guide&lt;/a&gt; to learn how to add Markdown content, customize your site, and deploy it. For inspiration, refer to the &lt;a href=&#34;https://github.com/gcushen/hugo-academic/tree/master/exampleSite&#34; target=&#34;_blank&#34;&gt;Markdown content&lt;/a&gt; which powers the &lt;a href=&#34;https://themes.gohugo.io/theme/academic/&#34; target=&#34;_blank&#34;&gt;Demo&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Build your site by running the &lt;code&gt;hugo&lt;/code&gt; command. Then &lt;a href=&#34;https://georgecushen.com/create-your-website-with-hugo/&#34; target=&#34;_blank&#34;&gt;host it for free using Github Pages&lt;/a&gt; or Netlify (refer to the first installation method). Alternatively, copy the generated &lt;code&gt;public/&lt;/code&gt; directory (by FTP, Rsync, etc.) to your production web server (such as a university&amp;rsquo;s hosting service).&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;updating&#34;&gt;Updating&lt;/h2&gt;
-
-&lt;p&gt;Feel free to &lt;em&gt;star&lt;/em&gt; the project on &lt;a href=&#34;https://github.com/gcushen/hugo-academic/&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt; to help keep track of updates and check out the &lt;a href=&#34;https://sourcethemes.com/academic/updates&#34; target=&#34;_blank&#34;&gt;release notes&lt;/a&gt; prior to updating your site.&lt;/p&gt;
-
-&lt;p&gt;Before updating the framework, it is recommended to make a backup of your entire website directory (or at least your &lt;code&gt;themes/academic&lt;/code&gt; directory) and record your current version number.&lt;/p&gt;
-
-&lt;p&gt;By default, Academic is installed as a Git submodule which can be updated by running the following command:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git submodule update --remote --merge
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/update/&#34; target=&#34;_blank&#34;&gt;Check out the update guide&lt;/a&gt; for full instructions and alternative methods.&lt;/p&gt;
-
-&lt;h2 id=&#34;feedback-contributing&#34;&gt;Feedback &amp;amp; Contributing&lt;/h2&gt;
-
-&lt;p&gt;Please use the &lt;a href=&#34;https://github.com/gcushen/hugo-academic/issues&#34; target=&#34;_blank&#34;&gt;issue tracker&lt;/a&gt; to let me know about any bugs or feature requests, or alternatively make a pull request.&lt;/p&gt;
-
-&lt;p&gt;For support, head over to the &lt;a href=&#34;http://discuss.gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo discussion forum&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;license&#34;&gt;License&lt;/h2&gt;
-
-&lt;p&gt;Copyright 2016-present &lt;a href=&#34;https://georgecushen.com&#34; target=&#34;_blank&#34;&gt;George Cushen&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Released under the &lt;a href=&#34;https://github.com/gcushen/hugo-academic/blob/master/LICENSE.md&#34; target=&#34;_blank&#34;&gt;MIT&lt;/a&gt; license.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;R Markdown&lt;/h1&gt;
-&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-fit &amp;lt;- lm(dist ~ speed, data = cars)
-fit
-## 
-## Call:
-## lm(formula = dist ~ speed, data = cars)
-## 
-## Coefficients:
-## (Intercept)        speed  
-##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Including Plots&lt;/h1&gt;
-&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
-  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
-  init.angle = -50, border = NA
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 1: A fancy pie chart.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/hobbies/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/hobbies/</guid>
-      <description>&lt;!DOCTYPE html&gt;
-&lt;html lang=&#34;en-us&#34;&gt;
-&lt;head&gt;
-
-  &lt;meta charset=&#34;utf-8&#34;&gt;
-  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
-  &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;IE=edge&#34;&gt;
-  &lt;meta name=&#34;theme&#34; content=&#34;hugo-academic&#34;&gt;
-  &lt;meta name=&#34;generator&#34; content=&#34;Hugo 0.41&#34; /&gt;
-  &lt;meta name=&#34;author&#34; content=&#34;Garrett O&amp;#39;Day&#34;&gt;
-
-
-
-
-
-  &lt;meta name=&#34;description&#34; content=&#34;Graduate Researcher&#34;&gt;
-
-
-  &lt;link rel=&#34;alternate&#34; hreflang=&#34;en-us&#34; href=&#34;/hobbies/&#34;&gt;
-
-
-
-
-
-
-
-
-  &lt;meta name=&#34;theme-color&#34; content=&#34;#3f51b5&#34;&gt;
-
-
-
-
-
-
-
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34; integrity=&#34;sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css&#34; integrity=&#34;sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&#34; integrity=&#34;sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css&#34; integrity=&#34;sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=&#34; crossorigin=&#34;anonymous&#34;&gt;
-
-
-
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&amp;#43;Mono&#34;&gt;
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;/styles.css&#34;&gt;
-
-
-
-
-
-  &lt;link rel=&#34;alternate&#34; href=&#34;/hobbies/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;link rel=&#34;feed&#34; href=&#34;/hobbies/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-
-
-  &lt;link rel=&#34;manifest&#34; href=&#34;/site.webmanifest&#34;&gt;
-  &lt;link rel=&#34;icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon.png&#34;&gt;
-  &lt;link rel=&#34;apple-touch-icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon-192.png&#34;&gt;
-
-  &lt;link rel=&#34;canonical&#34; href=&#34;/hobbies/&#34;&gt;
-
-  &lt;meta property=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
-
-  &lt;meta property=&#34;twitter:site&#34; content=&#34;@GeorgeCushen&#34;&gt;
-  &lt;meta property=&#34;twitter:creator&#34; content=&#34;@GeorgeCushen&#34;&gt;
-
-  &lt;meta property=&#34;og:site_name&#34; content=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;meta property=&#34;og:url&#34; content=&#34;/hobbies/&#34;&gt;
-  &lt;meta property=&#34;og:title&#34; content=&#34;Hobbies | Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;meta property=&#34;og:description&#34; content=&#34;Graduate Researcher&#34;&gt;
-  &lt;meta property=&#34;og:locale&#34; content=&#34;en-us&#34;&gt;
-
-  &lt;meta property=&#34;og:updated_time&#34; content=&#34;2017-01-01T00:00:00-05:00&#34;&gt;
-
-
-
-
-
-  &lt;title&gt;Hobbies | Garrett M. O&amp;#39;Day&lt;/title&gt;
-
-&lt;/head&gt;
-&lt;body id=&#34;top&#34; data-spy=&#34;scroll&#34; data-target=&#34;#toc&#34; data-offset=&#34;71&#34; &gt;
-
-&lt;nav class=&#34;navbar navbar-default navbar-fixed-top&#34; id=&#34;navbar-main&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-
-
-    &lt;div class=&#34;navbar-header&#34;&gt;
-
-      &lt;button type=&#34;button&#34; class=&#34;navbar-toggle collapsed&#34; data-toggle=&#34;collapse&#34;
-              data-target=&#34;.navbar-collapse&#34; aria-expanded=&#34;false&#34;&gt;
-        &lt;span class=&#34;sr-only&#34;&gt;Toggle navigation&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-      &lt;/button&gt;
-
-      &lt;a class=&#34;navbar-brand&#34; href=&#34;/&#34;&gt;Garrett M. O&amp;#39;Day&lt;/a&gt;
-    &lt;/div&gt;
-
-
-    &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
-
-
-
-      &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;/#about&#34;&gt;
-
-            &lt;span&gt;About&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;/research&#34;&gt;
-
-            &lt;span&gt;Research&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
-
-            &lt;span&gt;CV&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
-
-            &lt;span&gt;Resume&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;/projects&#34;&gt;
-
-            &lt;span&gt;Projects&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;/resources&#34;&gt;
-
-            &lt;span&gt;Resources&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-        &lt;li class=&#34;nav-item&#34;&gt;
-          &lt;a href=&#34;/hobbies&#34;&gt;
-
-            &lt;span&gt;Hobbies&lt;/span&gt;
-
-          &lt;/a&gt;
-        &lt;/li&gt;
-
-
-
-
-
-
-      &lt;/ul&gt;
-
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-
-
-
-
-
-&lt;div class=&#34;universal-wrapper&#34;&gt;
-
-  &lt;h1&gt; &lt;center&gt; &lt;br&gt; Hobbies &lt;center&gt; &lt;/h1&gt;
-
-
-
-
-
-  &lt;h2 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;
-    &lt;a href=&#34;/hobbies/woodworking/&#34; itemprop=&#34;url&#34;&gt;Woodworking&lt;/a&gt;
-    &lt;br&gt; &lt;br&gt;
-    &lt;a href=&#34;/2018-06-04-reading/&#34; itemprop=&#34;url&#34;&gt;Reading&lt;/a&gt;
-    &lt;br&gt; &lt;br&gt;
-    &lt;a href=&#34;/hobbies/2018-06-04-other/&#34; itemprop=&#34;url&#34;&gt;Other&lt;/a&gt;
-  &lt;/h2&gt;
-  &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
-
-    &lt;li&gt;&lt;a href=&#34;/post/getting-started/&#34;&gt;Academic: the website designer for Hugo&lt;/a&gt;&lt;/li&gt;
-
-    &lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
-
-&lt;footer class=&#34;site-footer&#34;&gt;
-&lt;/footer&gt;
-
-
-&lt;div id=&#34;modal&#34; class=&#34;modal fade&#34; role=&#34;dialog&#34;&gt;
-  &lt;div class=&#34;modal-dialog&#34;&gt;
-    &lt;div class=&#34;modal-content&#34;&gt;
-      &lt;div class=&#34;modal-header&#34;&gt;
-        &lt;button type=&#34;button&#34; class=&#34;close btn-large&#34; data-dismiss=&#34;modal&#34;&gt;&amp;times;&lt;/button&gt;
-        &lt;h4 class=&#34;modal-title&#34;&gt;Cite&lt;/h4&gt;
-      &lt;/div&gt;
-      &lt;div&gt;
-        &lt;pre&gt;&lt;code class=&#34;modal-body tex&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;modal-footer&#34;&gt;
-        &lt;a class=&#34;btn btn-primary btn-outline js-copy-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
-          &lt;i class=&#34;fa fa-copy&#34;&gt;&lt;/i&gt; Copy
-        &lt;/a&gt;
-        &lt;a class=&#34;btn btn-primary btn-outline js-download-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
-          &lt;i class=&#34;fa fa-download&#34;&gt;&lt;/i&gt; Download
-        &lt;/a&gt;
-        &lt;div id=&#34;modal-error&#34;&gt;&lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-
-
-
-
-
-
-
-
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&#34; integrity=&#34;sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js&#34; integrity=&#34;sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js&#34; integrity=&#34;sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js&#34; integrity=&#34;sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js&#34; integrity=&#34;sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-
-
-    &lt;script src=&#34;/js/hugo-academic.js&#34;&gt;&lt;/script&gt;
-
-
-
-
-
-
-
-
-  &lt;/body&gt;
-&lt;/html&gt;
 </description>
     </item>
     
@@ -776,6 +172,21 @@ Figure 1: A fancy pie chart.
 
 
 
+                                &lt;li class=&#34;nav-item&#34;&gt;
+                                  &lt;a href=&#34;/projects&#34;&gt;
+
+                                    &lt;span&gt;Projects&lt;/span&gt;
+
+                                  &lt;/a&gt;
+                                &lt;/li&gt;
+
+
+
+                
+
+
+
+
 
 
 
@@ -826,19 +237,6 @@ Figure 1: A fancy pie chart.
 
 
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/projects&#34;&gt;
-
-                    &lt;span&gt;Projects&lt;/span&gt;
-
-                  &lt;/a&gt;
-                &lt;/li&gt;
-
-
-
-
-
-
 
 
 
@@ -864,13 +262,6 @@ Figure 1: A fancy pie chart.
 
 
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/hobbies&#34;&gt;
-
-                    &lt;span&gt;Hobbies&lt;/span&gt;
-
-                  &lt;/a&gt;
-                &lt;/li&gt;
 
 
 
@@ -1098,9 +489,9 @@ Figure 1: A fancy pie chart.
 
     &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
 
+            &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
 
 
-      &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
 
 
 
@@ -1108,15 +499,15 @@ Figure 1: A fancy pie chart.
 
 
 
+                      &lt;li class=&#34;nav-item&#34;&gt;
+                        &lt;a href=&#34;/#about&#34;&gt;
 
+                          &lt;span&gt;About&lt;/span&gt;
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/#about&#34;&gt;
+                        &lt;/a&gt;
+                      &lt;/li&gt;
 
-                    &lt;span&gt;About&lt;/span&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
 
 
 
@@ -1127,17 +518,23 @@ Figure 1: A fancy pie chart.
 
 
 
+                      &lt;li class=&#34;nav-item&#34;&gt;
+                        &lt;a href=&#34;/research&#34;&gt;
 
+                          &lt;span&gt;Research&lt;/span&gt;
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/research&#34;&gt;
+                        &lt;/a&gt;
+                      &lt;/li&gt;
 
-                    &lt;span&gt;Research&lt;/span&gt;
+                      &lt;li class=&#34;nav-item&#34;&gt;
+                        &lt;a href=&#34;/projects&#34;&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
+                          &lt;span&gt;Projects&lt;/span&gt;
 
+                        &lt;/a&gt;
+                      &lt;/li&gt;
 
+                      
 
 
 
@@ -1148,15 +545,15 @@ Figure 1: A fancy pie chart.
 
 
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
 
-                    &lt;span&gt;CV&lt;/span&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
+                      &lt;li class=&#34;nav-item&#34;&gt;
+                        &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
 
+                          &lt;span&gt;CV&lt;/span&gt;
 
+                        &lt;/a&gt;
+                      &lt;/li&gt;
 
 
 
@@ -1169,15 +566,15 @@ Figure 1: A fancy pie chart.
 
 
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
 
-                    &lt;span&gt;Resume&lt;/span&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
+                      &lt;li class=&#34;nav-item&#34;&gt;
+                        &lt;a href=&#34;https://drive.google.com/file/d/1zGiXAS-OiFyqixdVcCkkrr0ndPavQ_nL/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
 
+                          &lt;span&gt;Resume&lt;/span&gt;
 
+                        &lt;/a&gt;
+                      &lt;/li&gt;
 
 
 
@@ -1190,13 +587,8 @@ Figure 1: A fancy pie chart.
 
 
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/projects&#34;&gt;
 
-                    &lt;span&gt;Projects&lt;/span&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
 
 
 
@@ -1208,14 +600,14 @@ Figure 1: A fancy pie chart.
 
 
 
+                      &lt;li class=&#34;nav-item&#34;&gt;
+                        &lt;a href=&#34;/resources&#34;&gt;
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/resources&#34;&gt;
+                          &lt;span&gt;Resources&lt;/span&gt;
 
-                    &lt;span&gt;Resources&lt;/span&gt;
+                        &lt;/a&gt;
+                      &lt;/li&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
 
 
 
@@ -1228,17 +620,13 @@ Figure 1: A fancy pie chart.
 
 
 
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/hobbies&#34;&gt;
 
-                    &lt;span&gt;Hobbies&lt;/span&gt;
 
-                  &lt;/a&gt;
-                &lt;/li&gt;
+            &lt;/ul&gt;
 
 
 
-      &lt;/ul&gt;
+
 
     &lt;/div&gt;
   &lt;/div&gt;
