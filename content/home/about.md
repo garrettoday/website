@@ -15,4 +15,4 @@ weight = 5
 
 +++
 # A little about me
-Students spend countless hours attending lectures, visiting office hours, and studying independently. Yet, they are often unprepared and forgetful when test time comes. My research seeks to resolve this unfortunate predicament by applying principles from education, psychology, and cognitive science in order to promote long-term learning.
+Students spend countless hours attending lectures, visiting office hours, and studying independently. Yet, they are often unprepared, forgetful, and overconfident when tested. My research seeks to resolve this troublesome situation by applying principles from education, psychology, and cognitive science in order to promote long-term learning. Specifically, I am interested in optimizing retrieval-based learning and increasing students’ belief in and use of effective learning strategies.
