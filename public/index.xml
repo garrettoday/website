@@ -1,741 +1,456 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Garrett M. O&#39;Day on Garrett M. O&#39;Day</title>
+    <title>Garrett M. O&#39;Day</title>
     <link>/</link>
-    <description>Recent content in Garrett M. O&#39;Day on Garrett M. O&#39;Day</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content on Garrett M. O&#39;Day</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2019</copyright>
-    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 -0400</lastBuildDate>
-    <atom:link href="/" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
-      <title>Example Talk</title>
-      <link>/talk/example-talk/</link>
-      <pubDate>Sun, 01 Jan 2017 00:00:00 -0500</pubDate>
+      <title>Display Jupyter Notebooks with Academic</title>
+      <link>/post/jupyter/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/talk/example-talk/</guid>
-      <description>&lt;p&gt;Embed your slides or video here using &lt;a href=&#34;https://sourcethemes.com/academic/post/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;shortcodes&lt;/a&gt;. Further details can easily be added using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+      <guid>/post/jupyter/</guid>
+      <description>
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from IPython.core.display import Image
+Image(&#39;https://www.python.org/static/community_logos/python-logo-master-v3-TM-flattened.png&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;./academic_0_0.png&#34; alt=&#34;png&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print(&amp;quot;Welcome to Academic!&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Welcome to Academic!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;install-python-and-jupyter&#34;&gt;Install Python and Jupyter&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.anaconda.com/distribution/#download-section&#34; target=&#34;_blank&#34;&gt;Install Anaconda&lt;/a&gt; which includes Python 3 and Jupyter notebook.&lt;/p&gt;
+
+&lt;p&gt;Otherwise, for advanced users, install Jupyter notebook with &lt;code&gt;pip3 install jupyter&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;create-a-new-blog-post-as-usual-https-sourcethemes-com-academic-docs-managing-content-create-a-blog-post&#34;&gt;Create a new blog post &lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#create-a-blog-post&#34; target=&#34;_blank&#34;&gt;as usual&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Run the following commands in your Terminal, substituting &lt;code&gt;&amp;lt;MY_WEBSITE_FOLDER&amp;gt;&lt;/code&gt; and &lt;code&gt;my-post&lt;/code&gt; with the file path to your Academic website folder and a name for your blog post (without spaces), respectively:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd &amp;lt;MY_WEBSITE_FOLDER&amp;gt;
+hugo new  --kind post post/my-post
+cd &amp;lt;MY_WEBSITE_FOLDER&amp;gt;/content/post/my-post/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;create-or-upload-a-jupyter-notebook&#34;&gt;Create or upload a Jupyter notebook&lt;/h2&gt;
+
+&lt;p&gt;Run the following command to start Jupyter within your new blog post folder. Then create a new Jupyter notebook (&lt;em&gt;New &amp;gt; Python Notebook&lt;/em&gt;) or upload a notebook.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;jupyter notebook
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;convert-notebook-to-markdown&#34;&gt;Convert notebook to Markdown&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;jupyter nbconvert Untitled.ipynb --to markdown --NbConvertApp.output_files_dir=.
+
+# Copy the contents of Untitled.md and append it to index.md:
+cat Untitled.md | tee -a index.md
+
+# Remove the temporary file:
+rm Untitled.md
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;edit-your-post-metadata&#34;&gt;Edit your post metadata&lt;/h2&gt;
+
+&lt;p&gt;Open &lt;code&gt;index.md&lt;/code&gt; in your text editor and edit the title etc. in the &lt;a href=&#34;https://sourcethemes.com/academic/docs/front-matter/&#34; target=&#34;_blank&#34;&gt;front matter&lt;/a&gt; according to your preference.&lt;/p&gt;
+
+&lt;p&gt;To set a &lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#featured-image&#34; target=&#34;_blank&#34;&gt;featured image&lt;/a&gt;, place an image named &lt;code&gt;featured&lt;/code&gt; into your post&amp;rsquo;s folder.&lt;/p&gt;
+
+&lt;p&gt;For other tips, such as using math, see the guide on &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;writing content with Academic&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title></title>
-      <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Academic: the website builder for Hugo</title>
+      <link>/post/getting-started/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>/projects/</guid>
-      <description>&lt;!DOCTYPE html&gt;
-&lt;html lang=&#34;en-us&#34;&gt;
-&lt;head&gt;
-
-  &lt;meta charset=&#34;utf-8&#34;&gt;
-  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
-  &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;IE=edge&#34;&gt;
-  &lt;meta name=&#34;theme&#34; content=&#34;hugo-academic&#34;&gt;
-  &lt;meta name=&#34;generator&#34; content=&#34;Hugo 0.41&#34; /&gt;
-  &lt;meta name=&#34;author&#34; content=&#34;Garrett O&amp;#39;Day&#34;&gt;
-
-
-
-
-
-  &lt;meta name=&#34;description&#34; content=&#34;Graduate Researcher&#34;&gt;
-
-
-  &lt;link rel=&#34;alternate&#34; hreflang=&#34;en-us&#34; href=&#34;/projects/&#34;&gt;
-
-
-
-
-
-
-
-
-  &lt;meta name=&#34;theme-color&#34; content=&#34;#3f51b5&#34;&gt;
-
-
-
-
-
-
-
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34; integrity=&#34;sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css&#34; integrity=&#34;sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&#34; integrity=&#34;sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css&#34; integrity=&#34;sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=&#34; crossorigin=&#34;anonymous&#34;&gt;
-
-
-
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&amp;#43;Mono&#34;&gt;
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;/styles.css&#34;&gt;
-
-
-
-
-
-  &lt;link rel=&#34;alternate&#34; href=&#34;/projects/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;link rel=&#34;feed&#34; href=&#34;/projects/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-
-
-  &lt;link rel=&#34;manifest&#34; href=&#34;/site.webmanifest&#34;&gt;
-  &lt;link rel=&#34;icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon.png&#34;&gt;
-  &lt;link rel=&#34;apple-touch-icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon-192.png&#34;&gt;
-
-  &lt;link rel=&#34;canonical&#34; href=&#34;/projects/&#34;&gt;
-
-  &lt;meta property=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
-
-  &lt;meta property=&#34;twitter:site&#34; content=&#34;@GeorgeCushen&#34;&gt;
-  &lt;meta property=&#34;twitter:creator&#34; content=&#34;@GeorgeCushen&#34;&gt;
-
-  &lt;meta property=&#34;og:site_name&#34; content=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;meta property=&#34;og:url&#34; content=&#34;/projects/&#34;&gt;
-  &lt;meta property=&#34;og:title&#34; content=&#34;Research | Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;meta property=&#34;og:description&#34; content=&#34;Graduate Researcher&#34;&gt;
-  &lt;meta property=&#34;og:locale&#34; content=&#34;en-us&#34;&gt;
-
-  &lt;meta property=&#34;og:updated_time&#34; content=&#34;2017-01-01T00:00:00-05:00&#34;&gt;
-
-
-
-
-
-  &lt;title&gt;Research | Garrett M. O&amp;#39;Day&lt;/title&gt;
-
-&lt;/head&gt;
-&lt;body id=&#34;top&#34; data-spy=&#34;scroll&#34; data-target=&#34;#toc&#34; data-offset=&#34;71&#34; &gt;
-
-&lt;nav class=&#34;navbar navbar-default navbar-fixed-top&#34; id=&#34;navbar-main&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-
-
-    &lt;div class=&#34;navbar-header&#34;&gt;
-
-      &lt;button type=&#34;button&#34; class=&#34;navbar-toggle collapsed&#34; data-toggle=&#34;collapse&#34;
-              data-target=&#34;.navbar-collapse&#34; aria-expanded=&#34;false&#34;&gt;
-        &lt;span class=&#34;sr-only&#34;&gt;Toggle navigation&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-      &lt;/button&gt;
-
-      &lt;a class=&#34;navbar-brand&#34; href=&#34;/&#34;&gt;Garrett M. O&amp;#39;Day&lt;/a&gt;
-    &lt;/div&gt;
-
-
-    &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
-
-
-
-      &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
-
-
-
-
-
-
-
-
-
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/#about&#34;&gt;
-
-                    &lt;span&gt;About&lt;/span&gt;
-
-                  &lt;/a&gt;
-                &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/research&#34;&gt;
-
-                    &lt;span&gt;Research&lt;/span&gt;
-
-                  &lt;/a&gt;
-                &lt;/li&gt;
-
-
-
-
-                                &lt;li class=&#34;nav-item&#34;&gt;
-                                  &lt;a href=&#34;/projects&#34;&gt;
-
-                                    &lt;span&gt;Projects&lt;/span&gt;
-
-                                  &lt;/a&gt;
-                                &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-                                &lt;li class=&#34;nav-item&#34;&gt;
-                                  &lt;a href=&#34;https://drive.google.com/file/d/1A-pXN1ZF3U1BKlUZ82UeDgRefkZVxc6S/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
-
-                                    &lt;span&gt;CV&lt;/span&gt;
-
-                                  &lt;/a&gt;
-                                &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                &lt;li class=&#34;nav-item&#34;&gt;
-                                  &lt;a href=&#34;https://drive.google.com/file/d/1A87HKt5u9HhLwgxg0ARD4oL1d0EVaPKw/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
-
-                                    &lt;span&gt;Resume&lt;/span&gt;
-
-                                  &lt;/a&gt;
-                                &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                &lt;li class=&#34;nav-item&#34;&gt;
-                  &lt;a href=&#34;/resources&#34;&gt;
-
-                    &lt;span&gt;Resources&lt;/span&gt;
-
-                  &lt;/a&gt;
-                &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      &lt;/ul&gt;
-
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-
-
-
-
-
-&lt;div class=&#34;universal-wrapper&#34;&gt;
-
-  &lt;h1&gt; &lt;center&gt; &lt;br&gt; Projects &lt;/center&gt; &lt;/h1&gt;
-
-
-  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;Manuscripts in Preparation&lt;/h3&gt;
-    &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
-      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J.D. (in preparation). Combining and Compairing Concept Mapping and Retrieval Practice.
-      &lt;/p&gt;
-
-      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J.D. (in preparation). Does self-scoring enhance learning?
-      &lt;/p&gt;
-
-    &lt;/div&gt;
-
-
-
-
-  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;Conference Presentations&lt;/h3&gt;
-    &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
-
-      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J. D. (May 2019). The Favoritism for Teacher-Generated Questions and the Failure of a Peer-Generated Question Bank.
-         Poster presented at the American Psychological Society Annual Meeting, Washington D.C. &lt;a href=&#34;url&#34;&gt;[Poster]&lt;/a&gt;
-
-      &lt;/p&gt;
-
-      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J. D. (November 2018). Combining and Comparing Retrieval Practice and Concept Mapping.
-        Poster presented at the Psychonomic Society Annual Meeting, Boston, MA. &lt;a href=&#34;url&#34;&gt;[Poster]&lt;/a&gt;
-
-      &lt;/p&gt;
-
-      &lt;p&gt;&lt;b&gt;O’Day, G.M.&lt;/b&gt;,, &amp; Karpicke, J. D. (October 2018). Getting students to practice retrieval using a
-      peer-generated, online question bank: An underpowered exploration. Talk given at Purdue Cognitive Psychology Colloquium. West Lafayette, IN. &lt;a href=&#34;url&#34;&gt;[Slides]&lt;/a&gt;
-
-      &lt;/p&gt;
-
-      &lt;p&gt;&lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Karpicke, J. D. (November 2017). Does Self-Scoring Enhance Learning?
-      Poster presented at the Psychonomic Society Annual Meeting, Vancouver, Canada. &lt;a href=&#34;url&#34;&gt;[Poster]&lt;/a&gt;
-
-      &lt;/p&gt;
-
-      &lt;p&gt;Ritchey, M., Gruber, M.J., Dhillon, A.S., &lt;b&gt;O’Day, G. M.&lt;/b&gt;, &amp; Ranganath, C. (November 2016).
-      Effects of emotional anticipation on neural oscillations involved in context-guided
-      prediction. Poster presented at the Society for Neuroscience Annual Meeting, San Diego,
-      CA.
-      &lt;/p&gt;
-    &lt;/div&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;div id=&#34;modal&#34; class=&#34;modal fade&#34; role=&#34;dialog&#34;&gt;
-  &lt;div class=&#34;modal-dialog&#34;&gt;
-    &lt;div class=&#34;modal-content&#34;&gt;
-      &lt;div class=&#34;modal-header&#34;&gt;
-        &lt;button type=&#34;button&#34; class=&#34;close btn-large&#34; data-dismiss=&#34;modal&#34;&gt;&amp;times;&lt;/button&gt;
-        &lt;h4 class=&#34;modal-title&#34;&gt;Cite&lt;/h4&gt;
-      &lt;/div&gt;
-      &lt;div&gt;
-        &lt;pre&gt;&lt;code class=&#34;modal-body tex&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;modal-footer&#34;&gt;
-        &lt;a class=&#34;btn btn-primary btn-outline js-copy-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
-          &lt;i class=&#34;fa fa-copy&#34;&gt;&lt;/i&gt; Copy
-        &lt;/a&gt;
-        &lt;a class=&#34;btn btn-primary btn-outline js-download-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
-          &lt;i class=&#34;fa fa-download&#34;&gt;&lt;/i&gt; Download
-        &lt;/a&gt;
-        &lt;div id=&#34;modal-error&#34;&gt;&lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+      <guid>/post/getting-started/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;Create a free website with Academic using Markdown, Jupyter, or RStudio. Choose a beautiful color theme and build anything with the Page Builder - over 40 &lt;em&gt;widgets&lt;/em&gt;, &lt;em&gt;themes&lt;/em&gt;, and &lt;em&gt;language packs&lt;/em&gt; included!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://academic-demo.netlify.com/&#34; target=&#34;_blank&#34;&gt;Check out the latest &lt;strong&gt;demo&lt;/strong&gt;&lt;/a&gt; of what you&amp;rsquo;ll get in less than 10 minutes, or &lt;a href=&#34;https://sourcethemes.com/academic/#expo&#34; target=&#34;_blank&#34;&gt;view the &lt;strong&gt;showcase&lt;/strong&gt;&lt;/a&gt; of personal, project, and business sites.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#install&#34;&gt;&lt;strong&gt;Setup Academic&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/get-started/&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Get Started&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/&#34; target=&#34;_blank&#34;&gt;View the documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://discuss.gohugo.io/&#34; target=&#34;_blank&#34;&gt;Ask a question&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/gcushen/hugo-academic/issues&#34; target=&#34;_blank&#34;&gt;Request a feature or report a bug&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Updating? View the &lt;a href=&#34;https://sourcethemes.com/academic/docs/update/&#34; target=&#34;_blank&#34;&gt;Update Guide&lt;/a&gt; and &lt;a href=&#34;https://sourcethemes.com/academic/updates/&#34; target=&#34;_blank&#34;&gt;Release Notes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Support development of Academic:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://paypal.me/cushen&#34; target=&#34;_blank&#34;&gt;Donate a coffee&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/cushen&#34; target=&#34;_blank&#34;&gt;Become a backer on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.redbubble.com/people/neutreno/works/34387919-academic&#34; target=&#34;_blank&#34;&gt;Decorate your laptop or journal with an Academic sticker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://academic.threadless.com/&#34; target=&#34;_blank&#34;&gt;Wear the T-shirt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/gcushen/hugo-academic/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/gcushen/hugo-academic/master/academic.png&#34; alt=&#34;Screenshot&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Key features:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Page builder&lt;/strong&gt; - Create &lt;em&gt;anything&lt;/em&gt; with &lt;a href=&#34;https://sourcethemes.com/academic/docs/page-builder/&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;widgets&lt;/strong&gt;&lt;/a&gt; and &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;elements&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edit any type of content&lt;/strong&gt; - Blog posts, publications, talks, slides, projects, and more!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create content&lt;/strong&gt; in &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/a&gt;, &lt;a href=&#34;https://sourcethemes.com/academic/docs/jupyter/&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;Jupyter&lt;/strong&gt;&lt;/a&gt;, or &lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-rstudio&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;RStudio&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Plugin System&lt;/strong&gt; - Fully customizable &lt;a href=&#34;https://sourcethemes.com/academic/themes/&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;color&lt;/strong&gt; and &lt;strong&gt;font themes&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Display Code and Math&lt;/strong&gt; - Code highlighting and &lt;a href=&#34;https://en.wikibooks.org/wiki/LaTeX/Mathematics&#34; target=&#34;_blank&#34;&gt;LaTeX math&lt;/a&gt; supported&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integrations&lt;/strong&gt; - &lt;a href=&#34;https://analytics.google.com&#34; target=&#34;_blank&#34;&gt;Google Analytics&lt;/a&gt;, &lt;a href=&#34;https://disqus.com&#34; target=&#34;_blank&#34;&gt;Disqus commenting&lt;/a&gt;, Maps, Contact Forms, and more!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Beautiful Site&lt;/strong&gt; - Simple and refreshing one page design&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Industry-Leading SEO&lt;/strong&gt; - Help get your website found on search engines and social media&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Media Galleries&lt;/strong&gt; - Display your images and videos with captions in a customizable gallery&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mobile Friendly&lt;/strong&gt; - Look amazing on every screen with a mobile friendly version of your site&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-language&lt;/strong&gt; - 15+ language packs including English, 中文, and Português&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-user&lt;/strong&gt; - Each author gets their own profile page&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Privacy Pack&lt;/strong&gt; - Assists with GDPR&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stand Out&lt;/strong&gt; - Bring your site to life with animation, parallax backgrounds, and scroll effects&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;One-Click Deployment&lt;/strong&gt; - No servers. No databases. Only files.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;color-themes&#34;&gt;Color Themes&lt;/h2&gt;
+
+&lt;p&gt;Academic comes with &lt;strong&gt;day (light) and night (dark) mode&lt;/strong&gt; built-in. Click the sun/moon icon in the top right of the &lt;a href=&#34;https://academic-demo.netlify.com/&#34; target=&#34;_blank&#34;&gt;Demo&lt;/a&gt; to see it in action!&lt;/p&gt;
+
+&lt;p&gt;Choose a stunning color and font theme for your site. Themes are fully customizable and include:&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+&lt;div class=&#34;gallery&#34;&gt;
+
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-1950s.png&#34; data-caption=&#34;1950s&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-1950s_huaf5482f8cea0c5a703a328640e3b7509_21614_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-apogee.png&#34; data-caption=&#34;Apogee&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-apogee_hu4b45d99db97150df01464c393bfd17d4_24119_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-coffee-playfair.png&#34; data-caption=&#34;Coffee theme with Playfair font&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-coffee-playfair_hu446a8f670cc5622adcc77b97ba95f6c5_22462_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-cupcake.png&#34; data-caption=&#34;Cupcake&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-cupcake_hueba8cfa8cfbc7543924fcbf387a99e92_23986_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-dark.png&#34; data-caption=&#34;Dark&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-dark_hu1e8601ecc47f58eada7743fdcd709d3d_21456_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-default.png&#34; data-caption=&#34;Default&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-default_huba6228b7bdf30e2f03f12ea91b2cba0d_21751_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-forest.png&#34; data-caption=&#34;Forest&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-forest_hu4f093a1c683134431456584193ea41ee_21797_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+    
+    
+    
+    
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+  &lt;a data-fancybox=&#34;gallery-gallery&#34; href=&#34;/post/getting-started/gallery/theme-ocean.png&#34; data-caption=&#34;Ocean&#34;&gt;
+  &lt;img src=&#34;/post/getting-started/gallery/theme-ocean_hu14831ccafc2219f30a7a096fa7617e01_21760_0x190_resize_lanczos_2.png&#34; alt=&#34;&#34;&gt;
+  &lt;/a&gt;
+  
+
+  
 &lt;/div&gt;
 
+&lt;h2 id=&#34;ecosystem&#34;&gt;Ecosystem&lt;/h2&gt;
 
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/sourcethemes/academic-admin&#34; target=&#34;_blank&#34;&gt;Academic Admin&lt;/a&gt;:&lt;/strong&gt; An admin tool to import publications from BibTeX or import assets for an offline site&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/sourcethemes/academic-scripts&#34; target=&#34;_blank&#34;&gt;Academic Scripts&lt;/a&gt;:&lt;/strong&gt; Scripts to help migrate content to new versions of Academic&lt;/li&gt;
+&lt;/ul&gt;
 
+&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
 
+&lt;p&gt;You can choose from one of the following four methods to install:&lt;/p&gt;
 
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-web-browser&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;one-click install using your web browser (recommended)&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-git&#34; target=&#34;_blank&#34;&gt;install on your computer using &lt;strong&gt;Git&lt;/strong&gt; with the Command Prompt/Terminal app&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-zip&#34; target=&#34;_blank&#34;&gt;install on your computer by downloading the &lt;strong&gt;ZIP files&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/install/#install-with-rstudio&#34; target=&#34;_blank&#34;&gt;install on your computer with &lt;strong&gt;RStudio&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
+&lt;p&gt;Then &lt;a href=&#34;https://sourcethemes.com/academic/docs/get-started/&#34; target=&#34;_blank&#34;&gt;personalize and deploy your new site&lt;/a&gt;.&lt;/p&gt;
 
+&lt;h2 id=&#34;updating&#34;&gt;Updating&lt;/h2&gt;
 
+&lt;p&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/update/&#34; target=&#34;_blank&#34;&gt;View the Update Guide&lt;/a&gt;.&lt;/p&gt;
 
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&#34; integrity=&#34;sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js&#34; integrity=&#34;sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js&#34; integrity=&#34;sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js&#34; integrity=&#34;sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js&#34; integrity=&#34;sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Feel free to &lt;em&gt;star&lt;/em&gt; the project on &lt;a href=&#34;https://github.com/gcushen/hugo-academic/&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt; to help keep track of &lt;a href=&#34;https://sourcethemes.com/academic/updates&#34; target=&#34;_blank&#34;&gt;updates&lt;/a&gt;.&lt;/p&gt;
 
+&lt;h2 id=&#34;license&#34;&gt;License&lt;/h2&gt;
 
-    &lt;script src=&#34;/js/hugo-academic.js&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Copyright 2016-present &lt;a href=&#34;https://georgecushen.com&#34; target=&#34;_blank&#34;&gt;George Cushen&lt;/a&gt;.&lt;/p&gt;
 
-
-
-
-
-
-
-
-  &lt;/body&gt;
-&lt;/html&gt;
+&lt;p&gt;Released under the &lt;a href=&#34;https://github.com/gcushen/hugo-academic/blob/master/LICENSE.md&#34; target=&#34;_blank&#34;&gt;MIT&lt;/a&gt; license.&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title></title>
-      <link>/research/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Hello R Markdown</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
       
-      <guid>/research/</guid>
-      <description>&lt;!DOCTYPE html&gt;
-&lt;html lang=&#34;en-us&#34;&gt;
-&lt;head&gt;
-
-  &lt;meta charset=&#34;utf-8&#34;&gt;
-  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1&#34;&gt;
-  &lt;meta http-equiv=&#34;X-UA-Compatible&#34; content=&#34;IE=edge&#34;&gt;
-  &lt;meta name=&#34;theme&#34; content=&#34;hugo-academic&#34;&gt;
-  &lt;meta name=&#34;generator&#34; content=&#34;Hugo 0.41&#34; /&gt;
-  &lt;meta name=&#34;author&#34; content=&#34;Garrett O&amp;#39;Day&#34;&gt;
-
-
-
-
-
-  &lt;meta name=&#34;description&#34; content=&#34;Graduate Researcher&#34;&gt;
-
-
-  &lt;link rel=&#34;alternate&#34; hreflang=&#34;en-us&#34; href=&#34;/research/&#34;&gt;
-
-
-
-
-
-
-
-
-  &lt;meta name=&#34;theme-color&#34; content=&#34;#3f51b5&#34;&gt;
-
-
-
-
-
-
-
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css&#34; integrity=&#34;sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css&#34; integrity=&#34;sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&#34; integrity=&#34;sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==&#34; crossorigin=&#34;anonymous&#34;&gt;
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css&#34; integrity=&#34;sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=&#34; crossorigin=&#34;anonymous&#34;&gt;
-
-
-
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&amp;#43;Mono&#34;&gt;
-
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;/styles.css&#34;&gt;
-
-
-
-
-
-  &lt;link rel=&#34;alternate&#34; href=&#34;/research/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;link rel=&#34;feed&#34; href=&#34;/research/index.xml&#34; type=&#34;application/rss+xml&#34; title=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-
-
-  &lt;link rel=&#34;manifest&#34; href=&#34;/site.webmanifest&#34;&gt;
-  &lt;link rel=&#34;icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon.png&#34;&gt;
-  &lt;link rel=&#34;apple-touch-icon&#34; type=&#34;image/png&#34; href=&#34;/img/icon-192.png&#34;&gt;
-
-  &lt;link rel=&#34;canonical&#34; href=&#34;/research/&#34;&gt;
-
-  &lt;meta property=&#34;twitter:card&#34; content=&#34;summary_large_image&#34;&gt;
-
-  &lt;meta property=&#34;twitter:site&#34; content=&#34;@GeorgeCushen&#34;&gt;
-  &lt;meta property=&#34;twitter:creator&#34; content=&#34;@GeorgeCushen&#34;&gt;
-
-  &lt;meta property=&#34;og:site_name&#34; content=&#34;Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;meta property=&#34;og:url&#34; content=&#34;/research/&#34;&gt;
-  &lt;meta property=&#34;og:title&#34; content=&#34;Research | Garrett M. O&amp;#39;Day&#34;&gt;
-  &lt;meta property=&#34;og:description&#34; content=&#34;Graduate Researcher&#34;&gt;
-  &lt;meta property=&#34;og:locale&#34; content=&#34;en-us&#34;&gt;
-
-  &lt;meta property=&#34;og:updated_time&#34; content=&#34;2017-01-01T00:00:00-05:00&#34;&gt;
-
-
-
-
-
-  &lt;title&gt;Research | Garrett M. O&amp;#39;Day&lt;/title&gt;
-
-&lt;/head&gt;
-&lt;body id=&#34;top&#34; data-spy=&#34;scroll&#34; data-target=&#34;#toc&#34; data-offset=&#34;71&#34; &gt;
-
-&lt;nav class=&#34;navbar navbar-default navbar-fixed-top&#34; id=&#34;navbar-main&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-
-
-    &lt;div class=&#34;navbar-header&#34;&gt;
-
-      &lt;button type=&#34;button&#34; class=&#34;navbar-toggle collapsed&#34; data-toggle=&#34;collapse&#34;
-              data-target=&#34;.navbar-collapse&#34; aria-expanded=&#34;false&#34;&gt;
-        &lt;span class=&#34;sr-only&#34;&gt;Toggle navigation&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-        &lt;span class=&#34;icon-bar&#34;&gt;&lt;/span&gt;
-      &lt;/button&gt;
-
-      &lt;a class=&#34;navbar-brand&#34; href=&#34;/&#34;&gt;Garrett M. O&amp;#39;Day&lt;/a&gt;
-    &lt;/div&gt;
-
-
-    &lt;div class=&#34;collapse navbar-collapse&#34;&gt;
-
-            &lt;ul class=&#34;nav navbar-nav navbar-right&#34;&gt;
-
-
-
-
-
-
-
-
-
-                      &lt;li class=&#34;nav-item&#34;&gt;
-                        &lt;a href=&#34;/#about&#34;&gt;
-
-                          &lt;span&gt;About&lt;/span&gt;
-
-                        &lt;/a&gt;
-                      &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-                      &lt;li class=&#34;nav-item&#34;&gt;
-                        &lt;a href=&#34;/research&#34;&gt;
-
-                          &lt;span&gt;Research&lt;/span&gt;
-
-                        &lt;/a&gt;
-                      &lt;/li&gt;
-
-                      &lt;li class=&#34;nav-item&#34;&gt;
-                        &lt;a href=&#34;/projects&#34;&gt;
-
-                          &lt;span&gt;Projects&lt;/span&gt;
-
-                        &lt;/a&gt;
-                      &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      &lt;li class=&#34;nav-item&#34;&gt;
-                        &lt;a href=&#34;https://drive.google.com/file/d/1A-pXN1ZF3U1BKlUZ82UeDgRefkZVxc6S/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
-
-                          &lt;span&gt;CV&lt;/span&gt;
-
-                        &lt;/a&gt;
-                      &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      &lt;li class=&#34;nav-item&#34;&gt;
-                        &lt;a href=&#34;https://drive.google.com/file/d/1A87HKt5u9HhLwgxg0ARD4oL1d0EVaPKw/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
-
-                          &lt;span&gt;Resume&lt;/span&gt;
-
-                        &lt;/a&gt;
-                      &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                      &lt;li class=&#34;nav-item&#34;&gt;
-                        &lt;a href=&#34;/resources&#34;&gt;
-
-                          &lt;span&gt;Resources&lt;/span&gt;
-
-                        &lt;/a&gt;
-                      &lt;/li&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            &lt;/ul&gt;
-
-
-
-
-
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-
-
-
-
-
-&lt;div class=&#34;universal-wrapper&#34;&gt;
-
-  &lt;h1&gt; &lt;center&gt; &lt;br&gt; Research Interests &lt;/center&gt; &lt;/h1&gt;
-
-
-  &lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;How can retrieval-based learning be optimized?&lt;/h3&gt;
-  &lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
-    Learning is often conceptualized as encoding or the acquisition of knowledge and can occur when students are reading textbooks, taking notes, or studying examples. Sometime after students have finished learning the material, they are given a test to assess their understanding. Testing, in this view, is seen as nothing more than a diagnostic tool that students do not enjoy taking and teachers do not enjoy grading. Fortunately, research has consistently demonstrated the immense learning that arises from taking tests and retrieving information, which vastly outweighs the drawbacks of testing.
-    &lt;br&gt;&lt;br&gt;
-    My research focuses on in leveraging retrieval in new ways to further promote durable learning. From this perspective, I attempted to improve passive reading of feedback by incorporating self-evaluation, examined the mnemonic consequences of combining other learning strategies with retrieval practice, and investigated the robustness of the retrieval practice effect when learners are experiencing test anxiety.
-
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>
+
+
+&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R Markdown&lt;/h1&gt;
+&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &amp;lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-
-&lt;h3 class=&#34;article-title&#34; itemprop=&#34;headline&#34;&gt;How can students&#39; belief in and use of effective learning strategies be increased?&lt;/h3&gt;
-&lt;div class=&#34;article-style&#34; itemprop=&#34;articleBody&#34;&gt;
-  Despite the advances in the understanding of how people can learn optimally, many learners are often unaware of the benefits researched-based study strategies afford. Consequently, they underutilize these strategies when studying. How do we get students to see the light? Simply telling them what is effective is not enough! Your doctor telling you to be healthier is not helpful at all. Similarly, learning scientists telling students to use evidence-based learning strategies, such as retrieval practice, is not helpful. Why should students practice retrieval? How should they go about practicing retrieval?
-  &lt;br&gt;&lt;br&gt;
-  From this perspective, I have developed a framework - BAM - to better understand why students do not practice retrieval.
-  &lt;ol&gt;
-    1. Belief - Learners need to believe in the efficacy of the learning strategy. If they do not think a learning activity is useful then they will not use it.
-    &lt;br&gt;&lt;br&gt;
-    2. Access - Learners need to have access to materials that afford engagement in the learning activity. If learners are left without retrieval practice materials then they will be far less likely to engage in retrieval practice as their limited time is first depleted by creating practice questions, notecards, or any other cue that can prompt retrieval. Learners may also mistakenly believe that the creation of these materials leads to long-term learning and may terminate their studying before the materials are used to practice retrieval.
-    &lt;br&gt;&lt;br&gt;
-    3.Motivation - Learners need to be motivated to learn. If students are not motivated to master the material then they will not use a time-consuming and desirable-difficulty inducing learning strategy.
-  &lt;/ol&gt;
-  &lt;br&gt;
-  By using this framework, I have started investigating conditions in which students believe and engage in retrieval-based learning.
-
-
+&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Including Plots&lt;/h1&gt;
+&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
+  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
+  init.angle = -50, border = NA
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: A fancy pie chart.
+&lt;/p&gt;
 &lt;/div&gt;
-
- &lt;br&gt;
- &lt;br&gt;
-
-  &lt;/div&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;div id=&#34;modal&#34; class=&#34;modal fade&#34; role=&#34;dialog&#34;&gt;
-  &lt;div class=&#34;modal-dialog&#34;&gt;
-    &lt;div class=&#34;modal-content&#34;&gt;
-      &lt;div class=&#34;modal-header&#34;&gt;
-        &lt;button type=&#34;button&#34; class=&#34;close btn-large&#34; data-dismiss=&#34;modal&#34;&gt;&amp;times;&lt;/button&gt;
-        &lt;h4 class=&#34;modal-title&#34;&gt;Cite&lt;/h4&gt;
-      &lt;/div&gt;
-      &lt;div&gt;
-        &lt;pre&gt;&lt;code class=&#34;modal-body tex&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;modal-footer&#34;&gt;
-        &lt;a class=&#34;btn btn-primary btn-outline js-copy-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
-          &lt;i class=&#34;fa fa-copy&#34;&gt;&lt;/i&gt; Copy
-        &lt;/a&gt;
-        &lt;a class=&#34;btn btn-primary btn-outline js-download-cite&#34; href=&#34;#&#34; target=&#34;_blank&#34;&gt;
-          &lt;i class=&#34;fa fa-download&#34;&gt;&lt;/i&gt; Download
-        &lt;/a&gt;
-        &lt;div id=&#34;modal-error&#34;&gt;&lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
 &lt;/div&gt;
-
-
-
-
-
-
-
-
-
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&#34; integrity=&#34;sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js&#34; integrity=&#34;sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js&#34; integrity=&#34;sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js&#34; integrity=&#34;sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-    &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js&#34; integrity=&#34;sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
-
-
-    &lt;script src=&#34;/js/hugo-academic.js&#34;&gt;&lt;/script&gt;
-
-
-
-
-
-
-
-
-  &lt;/body&gt;
-&lt;/html&gt;
 </description>
     </item>
     

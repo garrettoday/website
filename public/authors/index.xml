@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors on Garrett M. O&#39;Day</title>
+    <link>/authors/</link>
+    <description>Recent content in Authors on Garrett M. O&#39;Day</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/admin/</guid>
+      <description>A little about me  Students spend countless hours attending lectures, visiting office hours, and studying independently. Yet, they are often unprepared, forgetful, and overconfident when tested. My research seeks to resolve this troublesome situation by applying principles from education, psychology, and cognitive science in order to promote long-term learning. Specifically, I am interested in optimizing retrieval-based learning and increasing students’ belief in and use of effective learning strategies.</description>
+    </item>
+    
+  </channel>
+</rss>

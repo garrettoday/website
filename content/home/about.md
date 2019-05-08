@@ -1,18 +1,14 @@
 +++
-# About/Biography widget.
-widget = "about"
-active = true
-date = 2016-04-20T00:00:00
+# About widget.
+widget = "about"  # See https://sourcethemes.com/academic/docs/page-builder/
+headless = true  # This file represents a page section.
+active = true  # Activate this widget? true/false
+weight = 20  # Order that this section will appear in.
 
-# Order that this section will appear in.
-weight = 5
+title = ""
 
-# List your academic interests.
-
-
-# List your qualifications (such as academic degrees).
-
-
+# Choose the user profile to display
+# This should be the username of a profile in your `content/authors/` folder.
+# See https://sourcethemes.com/academic/docs/get-started/#introduce-yourself
+author = "admin"
 +++
-# A little about me
-Students spend countless hours attending lectures, visiting office hours, and studying independently. Yet, they are often unprepared, forgetful, and overconfident when tested. My research seeks to resolve this troublesome situation by applying principles from education, psychology, and cognitive science in order to promote long-term learning. Specifically, I am interested in optimizing retrieval-based learning and increasing students’ belief in and use of effective learning strategies.
