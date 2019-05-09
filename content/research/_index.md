@@ -9,7 +9,7 @@ Learning is often conceptualized as encoding or the acquisition of knowledge and
 
 My research focuses on in leveraging retrieval in new ways to further promote durable learning. From this perspective, I attempted to improve passive reading of feedback by incorporating self-evaluation, examined the mnemonic consequences of combining other learning strategies with retrieval practice, and investigated the robustness of the retrieval practice effect when learners are experiencing test anxiety.
 
-### <span style="color:#1b85b8"> How can students' belief in and use of effective learning strategies be increased? </span">
+### <span style="color:#1b85b8  "> How can students' belief in and use of effective learning strategies be increased? </span">
 Despite the advances in the understanding of how people can learn optimally, many learners are often unaware of the benefits researched-based study strategies afford. Consequently, they underutilize these strategies when studying. How do we get students to see the light? Simply telling them what is effective is not enough! Your doctor telling you to be healthier is not helpful at all. Similarly, learning scientists telling students to use evidence-based learning strategies, such as retrieval practice, is not helpful. Why should students practice retrieval? How should they go about practicing retrieval? 
 
 From this perspective, I have developed a framework - BAM - to better understand why students do not practice retrieval.
