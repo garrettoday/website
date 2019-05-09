@@ -7,13 +7,13 @@ light = true
 
 
 # Primary
-primary = "#6897bb"
-primary_light = "#70549F"
-primary_dark = "#70549F"
+primary = "#1b85b8"
+primary_light = "#1b85b8"
+primary_dark = "#1b85b8"
 
 # Menu
 menu_primary = "#242229"
-menu_text = "#86abc8"
+menu_text = "#1b85b8"
 menu_text_active = "#ffffff"
 menu_title = "#ffffff"
 
