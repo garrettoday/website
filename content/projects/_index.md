@@ -4,14 +4,14 @@
 
 # <center>Projects</center></h1>
 
-### <span style="color:#20B2AA"> Manuscripts in Preparation </span style="color:#20B2AA">
+### <span style="color:#6897bb"> Manuscripts in Preparation </span>
 
 O’Day, G. M., & Karpicke, J.D. (in preparation). Combining and Compairing Concept Mapping and Retrieval Practice.
 
 O’Day, G. M., & Karpicke, J.D. (in preparation). Does self-scoring enhance learning?
 
 
-### <span style="color:#20B2AA"> Conference Presentations </span style="color:#20B2AA">
+### <span style="color:#6897bb"> Conference Presentations </span">
 
 O’Day, G. M., & Karpicke, J. D. (May 2019). The Favoritism for Teacher-Generated Questions and the Failure of a Peer-Generated Question Bank. Poster presented at the American Psychological Society Annual Meeting, Washington D.C. [[Poster]] (http://google.com)
 
