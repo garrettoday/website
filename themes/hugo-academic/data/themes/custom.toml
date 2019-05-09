@@ -2,19 +2,19 @@
 name = "Custom"
 
 # Is theme light or dark?
-light = true
+light = false
 
 # Primary
-primary = "#26619c"
-primary_light = "#e2e7f7"
-primary_dark = "#e2e7f7"
+primary = "#20B2AA"
+primary_light = "hsl(339, 90%, 78%)"
+primary_dark = "hsl(339, 90%, 58%)"
 
 # Menu
-menu_primary = "#26619c"
-menu_text = "#fff"
-menu_text_active = "#000000"
-menu_title = "#fff"
+menu_primary = "#141522"
+menu_text = "#9F9FA4"
+menu_text_active = "#20B2AA"
+menu_title = "#FFFFFF"
 
 # Home sections
-home_section_odd = "rgb(255, 255, 255)"
-home_section_even = "rgb(255, 255, 255)"
+home_section_odd = "hsla(231, 15%, 18%, 1)"
+home_section_even = "hsla(231, 15%, 18%, 1)"
