@@ -12,9 +12,9 @@ primary_light = "#1b85b8"
 primary_dark = "#1b85b8"
 
 # Menu
-menu_primary = "#242229"
-menu_text = "#1b85b8"
-menu_text_active = "#ffffff"
+menu_primary = "#202020"
+menu_text = "#797979"
+menu_text_active = "#1b85b8"
 menu_title = "#ffffff"
 
 # Home sections
