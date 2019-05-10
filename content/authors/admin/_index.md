@@ -23,5 +23,4 @@ user_groups:
 ---
 
 # <span style="color:#1b85b8"> A little about me </span>
-
-Students spend countless hours attending lectures, visiting office hours, and studying independently. Yet, they are often unprepared, forgetful, and overconfident when tested. My research seeks to resolve this troublesome situation by applying principles from education, psychology, and cognitive science in order to promote long-term learning. Specifically, I am interested in optimizing retrieval-based learning and increasing students’ belief in and use of effective learning strategies.
+Students spend countless hours attending lectures, visiting office hours, and studying independently. Yet, when they are tested they are often unprepared, forgetful, and overconfident. My research seeks to reconcile this troublesome situation by applying principles from education, psychology, and cognitive science in order to promote long-term learning. Specifically, I am interested in optimizing retrieval-based learning and increasing students’ belief in and use of effective learning strategies.
