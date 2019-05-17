@@ -10,7 +10,7 @@ Learning is often conceptualized as the encoding or acquisition of knowledge. So
 My research focuses on leveraging retrieval in new ways to further promote durable learning. From this perspective, I attempted to improve passive reading of feedback by incorporating self-evaluation, examined the mnemonic consequences of combining other learning strategies with retrieval practice, and investigated the robustness of the retrieval practice effect when learners are experiencing test anxiety.
 
 ### <span style="color:#1b85b8  "> How can students' belief in and use of effective learning strategies be increased? </span">
-Despite the advances in understanding of how people can learn optimally, many learners are often unaware of the benefits researched-based study strategies afford. Consequently, they underutilize these strategies when studying. A doctor advising her patients to be healthier is ineffective unless she also provides strategies for doing so. Similarly, telling students to study efficiently is not enough. Why should students practice retrieval? How should they go about doing so most efficiently?
+Despite the advances in understanding of how people can learn optimally, many learners are often unaware of the benefits research-based study strategies afford. Consequently, they underutilize these strategies when studying. A doctor advising her patients to be healthier is ineffective unless she also provides strategies for doing so. Similarly, telling students to study efficiently is not enough. Why should students practice retrieval? How should they go about doing so most efficiently?
 
 From this perspective, I have developed a framework - BAM - to better understand the roadblocks that inhibit students from practicing retrieval. 
 
@@ -20,7 +20,7 @@ From this perspective, I have developed a framework - BAM - to better understand
 
 2. Access - Learners need to have access to materials that afford engagement in the learning activity. If learners are left without retrieval practice materials then they will be far less likely to engage in retrieval practice as their limited time is first depleted by creating practice questions, notecards, or any other cue that can prompt retrieval. Learners may also mistakenly believe that the creation of these materials leads to long-term learning and may terminate their studying before the materials are adequately used to practice retrieval.
 
-3. Motivation - Learners need to be motivated to learn. If students are not motivated to master the material then they will not use a time-consuming and desirable-difficulty inducing learning strategy.
+3. Motivation - Learners need to be motivated to learn. If students are not motivated to master the material then they will not use a time-consuming and effortful learning strategy.
 
 By using this framework, I have started investigating conditions in which students believe and engage in retrieval-based learning. 
  
