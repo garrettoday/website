@@ -10,12 +10,12 @@ organizations:
   url: "http://learninglab.psych.purdue.edu/index.html"
 role: Graduate Researcher
 social:
-- icon: twitter
-  icon_pack: fab
-  link: https://twitter.com/
-- icon: linkedin
-  icon_pack: fab
-  link: https://linkedin.com/  
+# - icon: twitter
+#   icon_pack: fab
+#   link: https://twitter.com/
+# - icon: linkedin
+#   icon_pack: fab
+#   link: https://linkedin.com/  
 superuser: true
 user_groups:
 - Researchers
