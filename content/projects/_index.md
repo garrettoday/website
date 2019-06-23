@@ -15,7 +15,7 @@ O’Day, G. M., & Karpicke, J.D. (in preparation). Does self-scoring enhance lea
 
 ### <span style="color:#1b85b8"> Professional Presentations </span">
 
-O’Day, G. M., & Karpicke, J. D. (May 2019). The failure of a peer-generated question bank and the favoritism for teacher-generated questions. Poster presented at the American Psychological Society Annual Meeting, Washington D.C. [Link coming soon!]
+O’Day, G. M., & Karpicke, J. D. (May 2019). The failure of a peer-generated question bank and the favoritism for teacher-generated questions. Poster presented at the American Psychological Society Annual Meeting, Washington D.C. [[Poster]] (https://drive.google.com/file/d/1pHGqS7M2Osd87OHZudtRWqAT3JvNcKyh/view?usp=sharing)
 
 O’Day, G. M., & Karpicke, J. D. (November 2018). Combining and comparing retrieval practice and concept mapping. Poster presented at the Psychonomic Society Annual Meeting, Boston, MA. [[Poster]] (https://drive.google.com/file/d/17XOxRYsQvwxIIv499_SbHYQ74Foe3b2u/view?usp=sharing)
 
