@@ -14,7 +14,7 @@ Despite the advances in understanding of how people can learn optimally, many le
 
 From this perspective, I have developed a framework - BAM - to better understand the roadblocks that inhibit students from practicing retrieval. 
 
-![alt text](BAM.jpg)
+![alt text](BAM.pdf)
 
 1. Belief - Learners need to believe in the efficacy of the learning strategy. If they do not think a learning activity is useful then they will not use it.
 
