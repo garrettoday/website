@@ -6,11 +6,11 @@
 
 ### <span style="color:#1b85b8"> Manuscripts in Preparation </span>
 
-O’Day, G. M., & Karpicke, J.D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "analyses.zip" download = "analyses.zip"> [data] </a>
+O’Day, G. M., & Karpicke, J. D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "analyses.zip" download = "analyses.zip"> [data] </a>
 
-O’Day, G. M., & Karpicke, J.D. (in preparation). Combining and compairing concept mapping and retrieval practice.
+O’Day, G. M., & Karpicke, J. D. (in preparation). Combining and compairing concept mapping and retrieval practice.
 
-O’Day, G. M., & Karpicke, J.D. (in preparation). Does self-scoring enhance learning?
+O’Day, G. M., & Karpicke, J. D. (in preparation). Does self-scoring enhance learning?
 
 
 ### <span style="color:#1b85b8"> Professional Presentations </span">
