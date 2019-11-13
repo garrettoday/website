@@ -6,7 +6,7 @@
 
 ### <span style="color:#1b85b8"> Manuscripts in Preparation </span>
 
-O’Day, G. M., & Karpicke, J. D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a>
+O’Day, G. M., & Karpicke, J. D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "garrettoday.info/projects/papers/MastersThesis_ODay_Garrett_2019_06_25"> [pdf] </a>
 
 O’Day, G. M., & Karpicke, J. D. (in preparation). Combining and compairing concept mapping and retrieval practice. <a href = "CMRP_analyses.zip" download = "CMRP_analyses.zip"> [data] </a>
 
@@ -14,6 +14,12 @@ O’Day, G. M., & Karpicke, J. D. (in preparation). Does self-scoring enhance le
 
 
 ### <span style="color:#1b85b8"> Professional Presentations </span">
+
+O’Day, G. M., & Karpicke, J. D. (November 2019). Improving Problem Solving with Retrieval-Based Learning. Poster presented at the Psychonomic Society Annual Meeting, Montreal, QC. [[Poster]] (https://drive.google.com/open?id=1aISXVSXQYYGBD5JVneJfz5I-0VJ1INUA)
+
+Hornburg Byrd, Caroline, O’Day, G. M., & Karpicke, J. D. (November 2019). Examining the Effectiveness of Retrieval Practice Under Performance Pressure During a Final Test. Poster presented at the Psychonomic Society Annual Meeting, Montreal, QC. [[Poster]] (https://drive.google.com/open?id=1bQbHyiWDinrP1cw91Lio9Ya-erJ-3Iek)
+
+O’Day, G.M., & Karpicke, J. D. (October 2019). Improving students' belief in and use of retrieval practice. Talk given at Purdue University's Cognitive Psychology Colloquium. West Lafayette, IN. [[Slides]] (https://drive.google.com/open?id=10hsYWrogQc_z19tWiBW6WRkb9tFSkeHE)
 
 O’Day, G. M., & Karpicke, J. D. (May 2019). The failure of a peer-generated question bank and the favoritism for teacher-generated questions. Poster presented at the American Psychological Society Annual Meeting, Washington D.C. [[Poster]] (https://drive.google.com/file/d/1pHGqS7M2Osd87OHZudtRWqAT3JvNcKyh/view?usp=sharing)
 
