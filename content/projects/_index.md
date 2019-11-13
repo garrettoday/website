@@ -24,7 +24,7 @@ O’Day, G. M., & Karpicke, J. D. (in preparation). Does self-scoring enhance le
 
 O’Day, G. M., & Karpicke, J. D. (November 2019). Improving Problem Solving with Retrieval-Based Learning. Poster presented at the Psychonomic Society Annual Meeting, Montreal, QC. [[Poster]] (https://drive.google.com/open?id=1aISXVSXQYYGBD5JVneJfz5I-0VJ1INUA)
 
-Hornburg Byrd, Caroline, O’Day, G. M., & Karpicke, J. D. (November 2019). Examining the Effectiveness of Retrieval Practice Under Performance Pressure During a Final Test. Poster presented at the Psychonomic Society Annual Meeting, Montreal, QC. [[Poster]] (https://drive.google.com/open?id=1bQbHyiWDinrP1cw91Lio9Ya-erJ-3Iek)
+Hornburg, C.B., O’Day, G. M., & Karpicke, J. D. (November 2019). Examining the Effectiveness of Retrieval Practice Under Performance Pressure During a Final Test. Poster presented at the Psychonomic Society Annual Meeting, Montreal, QC. [[Poster]] (https://drive.google.com/open?id=1bQbHyiWDinrP1cw91Lio9Ya-erJ-3Iek)
 
 O’Day, G.M., & Karpicke, J. D. (October 2019). Improving students' belief in and use of retrieval practice. Talk given at Purdue University's Cognitive Psychology Colloquium. West Lafayette, IN. [[Slides]] (https://drive.google.com/open?id=10hsYWrogQc_z19tWiBW6WRkb9tFSkeHE)
 
