@@ -4,11 +4,18 @@
 
 # <center>Projects</center></h1>
 
+### <span style="color:#1b85b8"> Master's Thesis </span>
+O’Day, G. M., & Karpicke, J. D. (2019). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "garrettoday.info/projects/papers/MastersThesis_ODay_Garrett_2019_06_25.pdf"> [pdf] </a>
+
+
 ### <span style="color:#1b85b8"> Manuscripts in Preparation </span>
+O’Day, G. M., & Karpicke, J. D. (in revision). Combining and comparing concept mapping and retrieval practice. <a href = "CMRP_analyses.zip" download = "CMRP_analyses.zip"> [data] </a>
 
-O’Day, G. M., & Karpicke, J. D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "garrettoday.info/projects/papers/MastersThesis_ODay_Garrett_2019_06_25.pdf"> [pdf] </a>
+O’Day, G. M., Coverdale, M.E., & Karpicke, J. D. (in preparation). Improving retrieval practice by enhancing encoding.
 
-O’Day, G. M., & Karpicke, J. D. (in preparation). Combining and compairing concept mapping and retrieval practice. <a href = "CMRP_analyses.zip" download = "CMRP_analyses.zip"> [data] </a>
+O’Day, G. M., & Karpicke, J. D. (in preparation). Getting students to use retrieval practice by increasing their belief in its effectiveness.
+
+O’Day, G. M., & Karpicke, J. D. (in preparation). The failure of a peer-generated question bank and the favoritism for teacher-generated questions.
 
 O’Day, G. M., & Karpicke, J. D. (in preparation). Does self-scoring enhance learning?
 
