@@ -6,7 +6,7 @@
 
 ### <span style="color:#1b85b8"> Manuscripts in Preparation </span>
 
-O’Day, G. M., & Karpicke, J. D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "garrettoday.info/projects/papers/MastersThesis_ODay_Garrett_2019_06_25"> [pdf] </a>
+O’Day, G. M., & Karpicke, J. D. (in preparation -- Master's Thesis). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "garrettoday.info/projects/papers/MastersThesis_ODay_Garrett_2019_06_25.pdf"> [pdf] </a>
 
 O’Day, G. M., & Karpicke, J. D. (in preparation). Combining and compairing concept mapping and retrieval practice. <a href = "CMRP_analyses.zip" download = "CMRP_analyses.zip"> [data] </a>
 
