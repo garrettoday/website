@@ -5,7 +5,7 @@
 # <center>Projects</center></h1>
 
 ### <span style="color:#1b85b8"> Master's Thesis </span>
-O’Day, G. M., & Karpicke, J. D. (2019). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "/papers/MastersThesis_ODay_Garrett_2019_06_25.pdf"> [pdf] </a>
+O’Day, G. M., & Karpicke, J. D. (2019). Improving problem solving with retrieval-based learning. <a href = "WE_analyses.zip" download = "WE_analyses.zip"> [data] </a> <a href = "projects/papers/MastersThesis_ODay_Garrett_2019_06_25.pdf"> [pdf] </a>
 
 
 ### <span style="color:#1b85b8"> Manuscripts in Preparation </span>
