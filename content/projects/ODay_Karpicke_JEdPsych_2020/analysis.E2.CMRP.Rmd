@@ -1,0 +1,997 @@
+---
+title: "Data Analysis for O'Day and Karpicke (2020) E2"
+output: 
+  html_notebook:
+    toc: yes
+    toc_depth: 3
+    number_sections: true
+    code_folding: hide
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+---
+
+# - Setting up R
+```{r}
+rm(list = ls())     # clears R history and console for a tidy workspace
+options(scipen=999) # turns off scientific notation
+```
+
+## - Packages
+<span style="color:red">if you do not already have the package you will need to use install.packages("packageName")
+```{r}
+library(kableExtra)    # for pretty output
+library(gridExtra)     # for plotting two plots next to each other
+library(tidyverse)     # for data management
+library(readxl)        # for reading excel files 
+library(MBESS)         # for effect size
+library(MOTE)          # for apa function for limiting decimals
+library(ez)            # for ANOVA
+```
+
+## - Effect size function
+This function returns Cohen's D in a neat format for a t-test analysis.
+
+This function requires:
+
+* the type of analysis (between or within)
+* the dataFrame, the dataFormat (long or wide)
+* the name of the outcome and predictor variables or columns
+* the sample size (between use n1 and n2; within use N).
+
+```{r}
+effSize <- function(analysis, dataFrame, dataFormat, outcome, predictor, n1, n2, N) {
+  
+  # get the column number for outcome and predictor variables
+  outcomeColumn = which(colnames(dataFrame) == outcome)     
+  predictorColumn = which(colnames(dataFrame) == predictor) 
+  
+  if (analysis == "between") {
+    paired = F # do not do a paired t test for between subjects design
+  } else {
+    paired = T # do a paired t test for within subjects design
+  } 
+  
+  if (is.numeric(dataFrame[[predictorColumn]])) {
+    t <- t.test(dataFrame[[outcomeColumn]],dataFrame[[predictorColumn]], 
+                paired = paired, var.equal = T)
+  } else {
+    t <- t.test(dataFrame[[outcomeColumn]]~dataFrame[[predictorColumn]], 
+                paired = paired, var.equal = T)
+  }     
+  
+  
+  ncp <- t$statistic
+  
+  if (analysis == "between") {
+    df = n1 + n2 - 2
+    effectSize <- ci.smd(ncp=ncp, n.1=n1, n.2=n2)
+    d          <- apa(effectSize$smd, 2)
+    dlow       <- apa(effectSize$Lower.Conf.Limit.smd,2)
+    dhigh      <- apa(effectSize$Upper.Conf.Limit.smd,2)      
+  } else {
+    df = N - 1
+    effectSize <- capture.output(ci.sm(ncp=ncp, N=N)) # prevents MBESS printing to output
+    d          <- apa(as.numeric(substring(effectSize[7],0)),2)
+    dlow       <- apa(as.numeric(substring(effectSize[3],5)),2)
+    dhigh      <- apa(as.numeric(substring(effectSize[10],5)),2)
+  }
+  
+  p <- apa(t$p.value,3)
+  t <- apa(t$statistic,2)
+  
+  # create tidy output
+  summary <- paste("t(",df,") = ", t, ", p = ",p, ",",
+                   " d = ", d, " [", dlow, ", ", dhigh, "]", sep="")
+  
+  names  <- c("t","df","p","d","dlow","dhigh","summary")
+  values <- c(t,df,p,d,dlow,dhigh,summary)
+  
+  output <- rbind(names,values)
+  output <- data.frame(names,values)
+  
+  output <- output %>% 
+    spread(key=names,value=values) %>% 
+    select("t", "df", "p", "d","dlow", "dhigh","summary")
+  
+  return(output)
+}
+```
+
+## - Annotation function
+This function accepts name of data frame that has a column with mean values. For each row in the dataTable, go through columName, get each cell value and create an annotation for that value, add that annotation to a list.
+
+  * annotations will be added to graph in order they appear in dataTable
+  * columnName needs to be entered as a string (e.g., "mean")
+```{r}
+storage = list() # create storage container for use during looping
+
+annotations <- function (dataTable, columnName) {
+    columnNumber = which(colnames(dataTable) == columnName)
+    for (i in 1:nrow(dataTable)) {
+      name <- paste("A",i,sep="")
+      annotation <- assign(name,annotate("text", x = i, y = 0.05, label = as.character(dataTable[i,columnNumber]), size = 9))
+      storage[i] <- c(annotation)
+    }   
+    return(storage)
+}
+```
+
+## - Plot theme
+Custom theme that is added onto a ggplot object that makes nice looking plots
+```{r}
+PCLLABtheme <- 
+  theme(
+    # titles
+      plot.title   = element_text(size= 26, face = "bold",margin=margin(0,0,8,0), hjust = 0.5),
+      axis.title.x = element_text(margin=margin(6,0,0,0)),
+      axis.title.y = element_text(size = 24, face = "bold", margin=margin(0,10,0,0)),
+    # axes
+      axis.text.x = element_text(size = 23, colour="black", margin=margin(14,0,0,0,"pt")),
+      axis.text.y = element_text(size = 24, colour="black", margin=margin(0,8,0,0,"pt")),
+      axis.line   = element_line(colour = "black"),
+    # panel
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      panel.background = element_rect(fill = "white"),
+    # tick marks
+      axis.ticks.length = unit(-.2, "cm"),
+      axis.ticks.x      = element_blank(),
+      axis.ticks.y      = element_line(colour="black"),
+    # legend
+      legend.position = "none" # removes legend
+    )
+```
+
+## - Read in data
+<span style="color:red">Be sure to set your working directory to the appropriate place. 
+
+I find it easiest to click on "Session" => "Set working directory" => "To File Source Location".
+```{r, results = "hide"}
+# list all of the files and folders in the data folder within the working directory
+  list.files("data") 
+  
+# read in data - note this is an xlsx file with multiple sheets
+  E2data <- read_excel("data/finalData.CMRP.E2.xlsx", sheet = 2) 
+```
+
+# - Demographics
+```{r}
+# age
+  summary(E2data$age)
+  sd(E2data$age)
+
+# age by condition
+  E2data %>% 
+    group_by(condition) %>% 
+    summarize(meanAge = mean(age))
+
+# ANOVA - age
+  ezANOVA(
+      E2data
+      , age
+      , subNum
+      , between = condition
+      , type = 3
+      , detailed = T
+    )
+  
+# gender
+  table(E2data$gender)
+  
+# gender by condition
+  table(E2data$condition,E2data$gender)
+  chisq.test(table(E2data$condition,E2data$gender))
+```
+
+# - Concept map performance
+```{r, results = "asis"}
+# make condition CM+RP come first so that t value is positive
+  E2data$condition <- factor(E2data$condition, levels = c("CM+RP", "CM","Study","RP")) 
+
+# descriptives
+  kable(E2data %>% 
+          filter(condition == "CM+RP" | condition == "CM") %>% 
+          group_by(condition) %>% 
+          summarize(meanMapPerf = apa(mean(map_score, na.rm = T) / 27, 2), 
+                    sdMapPerf   = apa(sd  (map_score, na.rm = T) / 27, 2)), align = "c") %>%
+          kable_styling(full_width = F, position = "left", font_size = 14)
+
+# effect size function
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP" | condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "map_score"           # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for group 1 for between-subjects designs
+    , n2 = 30                         # sample size for group 2 for between-subjects designs
+    ), caption = "Map performance - CM vs. CM+RP") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+# traditional way to find ttest and Cohen's D in R
+with(data = E2data %>% filter(condition == "CM+RP" | condition == "CM") %>% droplevels(), t.test(map_score~condition, var.equal = T))
+ci.smd(ncp = 0.97522, n.1 = 30, n.2 = 30)
+```
+
+
+# - Retrieval practice performance
+A 2 (condition: retrieval practice vs. CM+RP) X 2 (recall test: 1 or 2) mixed factorial ANOVA was conducted
+
+Retrieval practice performance was qualified by a significant recall number by condition interaction.
+```{r, results = "asis"}
+# get data in correct format for ezANOVA
+  E2recallData <- E2data %>% 
+    filter(condition == "RP" | condition == "CM+RP") %>% # filter out study and CM
+    droplevels() %>% # remove the conditions that were filtered out
+    select(subNum,condition,recall_1_score,recall_2_score) %>% # select relevant columns
+    gather(key = recallNumber, value = recallScore, 3:4) %>% # convert wide data to long
+    mutate(recallProportion = recallScore / 27) # convert score to proportion
+  
+# make subNum a factor for ezANOVA
+  E2recallData$subNum <- as.factor(E2recallData$subNum)
+  
+# make recallNumber a factor for ezANOVA  
+  E2recallData$recallNumber <- as.factor(E2recallData$recallNumber)
+  
+# make cond a factor for ezANOVA
+  E2recallData$condition <- as.factor(E2recallData$condition)     
+  
+# ANOVA
+  recallAnova <- ezANOVA(
+    E2recallData
+    , recallProportion
+    , subNum
+    , within = recallNumber
+    , between = condition
+    , type = 3
+    , detailed = T
+  )
+
+# make output from ANOVA a tidy data frame
+  anovaTable <- data.frame(recallAnova) %>% 
+    rename("predictor" = 1, "DFn" = 2, "DFd" = 3, "SSn" = 4, 
+           "SSd" = 5, "F" = 6, "p" = 7, "sig" = 8, "ges" = 9) %>% # rename columns
+    mutate(pes = SSn / (SSn + SSd)) %>% # calculate partial eta squared 
+    mutate_if(is.numeric, round, digits = 3) # limit decimals to 3
+```
+
+```{r, results = "asis"}
+# create a nice table
+  kable(anovaTable, align = "c", booktabs = T) %>% 
+      kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+## - Recall 1
+```{r, results = "asis"}
+# filter out recall 2
+  E2R1data <- E2recallData %>% 
+    filter(recallNumber == "recall_1_score") 
+  
+# descriptives
+  kable(E2R1data %>% 
+    group_by(condition) %>% 
+    summarize(meanR1 = apa(mean(recallProportion),2), sdR1 = apa(sd(recallProportion),2))) %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# effect size function
+  kable(effSize(data = E2R1data
+    , analysis = "between"            # within or between
+    , dataFormat = "long"             # long or wide data
+    , outcome = "recallProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for group 1 for between-subjects designs
+    , n2 = 30                         # sample size for group 2 for between-subjects designs
+    ), caption = "Recall 1 - CM+RP vs. RP") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+# traditional way to find ttest and Cohen's D in R
+with(data = E2R1data, t.test(recallProportion~condition, var.equal = T))
+ci.smd(ncp = 1.1728, n.1 = 30, n.2 = 30)
+```
+
+## - Recall 2
+```{r, results = "asis"}
+# filter out recall 2
+  E2R2data <- E2recallData %>% 
+    filter(recallNumber == "recall_2_score") 
+  
+# make condition CM+RP first
+  E2R2data$condition <- factor(E2R2data$condition, levels = c("CM+RP", "RP")) 
+  
+# descriptives
+  kable(E2R2data %>% 
+    group_by(condition) %>% 
+    summarize(meanR1 = apa(mean(recallProportion),2), sdR1 = apa(sd(recallProportion),2))) %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# effect size function
+  kable(effSize(data = E2R2data
+    , analysis = "between"            # within or between
+    , dataFormat = "long"             # long or wide data
+    , outcome = "recallProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for group 1 for between-subjects designs
+    , n2 = 30                         # sample size for group 2 for between-subjects designs
+    ), caption = "Recall 2 - RP vs. CM+RP") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+# traditional way to find ttest and Cohen's D in R
+ with(data = E2R2data, t.test(recallProportion~condition, var.equal = T))
+ ci.smd(ncp = 1.4613, n.1 = 30, n.2 = 30)
+```
+
+# - Judgments of Learning
+```{r, results = "asis"}
+# ANOVA
+  E2data$subNum    <- as.factor(E2data$subNum)    # convert to factor for ANOVA
+  E2data$condition <- as.factor(E2data$condition) # convert to factor for ANOVA
+
+  jolAnova <- ezANOVA(
+    E2data
+  	, JOL
+  	, subNum
+  	, between = condition
+  	, type = 3
+  	, detailed = T
+  )
+
+# make output from ANOVA a tidy data frame
+  jolAnovaTable <- data.frame(jolAnova) %>% 
+    select(1:9) %>% 
+    rename("predictor" = 1, "DFn" = 2, "DFd" = 3, "SSn" = 4, 
+           "SSd" = 5, "F" = 6, "p" = 7, "sig" = 8, "ges" = 9) %>% # rename columns
+    mutate(pes = SSn / (SSn + SSd)) %>% # calculate partial eta squared 
+    mutate_if(is.numeric, round, digits = 3) # limit decimals to 3
+```
+
+```{r, results = "asis"}
+# descriptives
+  kable(E2data %>% 
+    group_by(condition) %>% 
+    summarize(meanJOL = apa(mean(JOL),2), sdJOL2 = apa(sd(JOL),2))) %>% 
+    kable_styling(bootstrap_options = "condensed", full_width = F, position = "left", font_size = 14)
+
+# create a nice table
+  kable(jolAnovaTable, align = "c", booktabs = T) %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+There were no significant differences in the JOLs.
+
+# - Test performance
+## - Verbatim questions
+```{r, results = "asis"}
+# convert score to proportion
+  E2data$verbProportion <- E2data$SA_verbatim / 10
+  
+# change order of conditions so t values are positive
+  E2data$condition <- factor(E2data$condition, levels = c("CM+RP", "RP", "CM", "Study"))
+  
+# descriptives
+  kable(E2data %>% 
+    group_by(condition) %>% 
+    summarize(meanVerbProportion = apa(mean(verbProportion),2), 
+              sdVerbProportion = apa(sd(verbProportion),2))) %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# RP vs. Study Only
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "verbProportion"      # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Verbatim - RP vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# CM+RP vs Study Only
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "verbProportion"      # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Verbatim - CM+RP vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# CM vs Study Only
+  kable(effSize(data = E2data %>% filter(condition == "CM"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "verbProportion"      # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Verbatim - CM vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")  
+  
+# RP vs CM
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "verbProportion"      # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Verbatim - RP vs. CM") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")    
+
+# CM+RP vs CM
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP"| condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "verbProportion"      # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Verbatim - CM+RP vs. CM") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")  
+  
+
+# RP vs. CM+RP
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "verbProportion"      # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Verbatim - RP vs. CM+RP") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+### traditional ttest and Cohen's D
+
+# RP vs. Study Only
+ with(data = E2data %>% filter(condition == "RP"| condition == "Study") %>% droplevels(),
+      t.test(verbProportion~condition, var.equal = T))
+ ci.smd(ncp = 7.9262, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. Study Only
+ with(data = E2data %>% filter(condition == "CM+RP"| condition == "Study") %>% droplevels(),
+      t.test(verbProportion~condition, var.equal = T))
+  ci.smd(ncp = 6.9467, n.1 = 30, n.2 = 30 )
+
+# CM vs. Study Only
+ with(data = E2data %>% filter(condition == "CM"| condition == "Study") %>% droplevels(),
+      t.test(verbProportion~condition, var.equal = T))
+  ci.smd(ncp = 2.2691, n.1 = 30, n.2 = 30 )
+  
+# RP vs. CM
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM") %>% droplevels(),
+      t.test(verbProportion~condition, var.equal = T))
+  ci.smd(ncp = 5.8833, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. CM
+ with(data = E2data %>% filter(condition == "CM+RP"| condition == "CM") %>% droplevels(),
+      t.test(verbProportion~condition, var.equal = T))
+  ci.smd(ncp = 4.7945, n.1 = 30, n.2 = 30 )
+  
+# RP vs. CM+RP
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(),
+      t.test(verbProportion~condition, var.equal = T))
+  ci.smd(ncp = 1.4364, n.1 = 30, n.2 = 30 )
+```
+
+## - Higher order questions
+```{r, results = "asis"}
+# convert score to proportion
+  E2data$higherProportion <- E2data$SA_inference / 4 
+  
+# change order of conditions so t values are positive
+  E2data$condition <- factor(E2data$condition, levels = c("CM+RP", "RP", "CM", "Study"))
+  
+# descriptives
+  kable(E2data %>% 
+    group_by(condition) %>% 
+    summarize(meanhigherProportion = apa(mean(higherProportion),2), 
+              sdhigherProportion = apa(sd(higherProportion),2))) %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# RP vs. Study Only
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "higherProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Higher Order - RP vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# CM+RP vs Study Only
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "higherProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Higher Order - CM+RP vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# CM vs Study Only
+  kable(effSize(data = E2data %>% filter(condition == "CM"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "higherProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Higher Order - CM vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")  
+  
+# RP vs CM
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "higherProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Higher Order - RP vs. CM") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")    
+
+# CM+RP vs CM
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP"| condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "higherProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Higher Order - CM+RP vs. CM") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")  
+  
+
+# RP vs. CM+RP
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "higherProportion"    # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Higher Order - RP vs. CM+RP") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+### traditional ttest and Cohen's D
+
+# RP vs. Study Only
+ with(data = E2data %>% filter(condition == "RP"| condition == "Study") %>% droplevels(),
+      t.test(higherProportion~condition, var.equal = T))
+ ci.smd(ncp = 4.8273, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. Study Only
+ with(data = E2data %>% filter(condition == "CM+RP"| condition == "Study") %>% droplevels(),
+      t.test(higherProportion~condition, var.equal = T))
+  ci.smd(ncp = 3.7498, n.1 = 30, n.2 = 30 )
+
+# CM vs. Study Only
+ with(data = E2data %>% filter(condition == "CM"| condition == "Study") %>% droplevels(),
+      t.test(higherProportion~condition, var.equal = T))
+  ci.smd(ncp = 1.49, n.1 = 30, n.2 = 30 )
+  
+# RP vs. CM
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM") %>% droplevels(),
+      t.test(higherProportion~condition, var.equal = T))
+  ci.smd(ncp = 3.3018, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. CM
+ with(data = E2data %>% filter(condition == "CM+RP"| condition == "CM") %>% droplevels(),
+      t.test(higherProportion~condition, var.equal = T))
+  ci.smd(ncp = 2.2266, n.1 = 30, n.2 = 30 )
+  
+# RP vs. CM+RP
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(),
+      t.test(higherProportion~condition, var.equal = T))
+  ci.smd(ncp = -1.1322, n.1 = 30, n.2 = 30 )
+```
+
+## - Final recall
+```{r, results = "asis"}
+# change order of conditions so t values are positive
+  E2data$condition <- factor(E2data$condition, levels = c("CM+RP", "RP", "CM", "Study")) 
+  
+# convert score to proportion
+  E2data$r3Proportion <- E2data$recall_3_score / 27
+
+# descriptives
+  kable(E2data %>% 
+    group_by(condition) %>% 
+    summarize(meanR3Proportion = apa(mean(r3Proportion),2), 
+              sdR3Proportion   = apa(sd  (r3Proportion),2))) %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# RP vs. Study Only
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "r3Proportion"        # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Final recall - RP vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# CM+RP vs Study Only
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "r3Proportion"        # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Final recall - CM+RP vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# CM vs Study Only
+  kable(effSize(data = E2data %>% filter(condition == "CM"| condition == "Study") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "r3Proportion"        # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Final recall - CM vs. Study") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")  
+  
+# RP vs CM
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "r3Proportion"        # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Final recall - RP vs. CM") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")    
+
+# CM+RP vs CM
+  kable(effSize(data = E2data %>% filter(condition == "CM+RP"| condition == "CM") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "r3Proportion"        # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Final recall - CM+RP vs. CM") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")  
+  
+
+# RP vs. CM+RP
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "long"             # long or wide data
+    , outcome = "r3Proportion"        # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Final recall - RP vs. CM+RP") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+### traditional ttest and Cohen's D
+
+# RP vs. Study Only
+ with(data = E2data %>% filter(condition == "RP"| condition == "Study") %>% droplevels(),
+      t.test(r3Proportion~condition, var.equal = T))
+ ci.smd(ncp = 8.9971, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. Study Only
+ with(data = E2data %>% filter(condition == "CM+RP"| condition == "Study") %>% droplevels(),
+      t.test(r3Proportion~condition, var.equal = T))
+  ci.smd(ncp = 7.061, n.1 = 30, n.2 = 30 )
+
+# CM vs. Study Only
+ with(data = E2data %>% filter(condition == "CM"| condition == "Study") %>% droplevels(),
+      t.test(r3Proportion~condition, var.equal = T))
+  ci.smd(ncp = 3.0177, n.1 = 30, n.2 = 30 )
+  
+# RP vs. CM
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM") %>% droplevels(),
+      t.test(r3Proportion~condition, var.equal = T))
+  ci.smd(ncp = 5.9639, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. CM
+ with(data = E2data %>% filter(condition == "CM+RP"| condition == "CM") %>% droplevels(),
+      t.test(r3Proportion~condition, var.equal = T))
+  ci.smd(ncp = 4.1927, n.1 = 30, n.2 = 30 )
+  
+# RP vs. CM+RP
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(),
+      t.test(r3Proportion~condition, var.equal = T))
+  ci.smd(ncp = -1.4569, n.1 = 30, n.2 = 30 )
+```
+
+# - Figure 2
+## - Verbatim performance
+```{r, results = "asis"}
+E2data$condition <- factor(E2data$condition, levels = c("Study", "CM", "RP", "CM+RP")) # change order of condition for plotting
+
+# create a table of means for plot annotations
+E2verbMeans <- E2data %>% 
+  group_by(condition) %>% 
+  summarize(mean = mean(verbProportion)) %>% 
+  mutate(mean = apa(mean,2,F)) %>%  # false removes leading zero   
+  droplevels()
+
+# create and store plot
+E2.verbPlot <- ggplot(data = E2data, aes(x = condition, y = verbProportion, fill = condition)) +
+  # ggplot code to create bar plots
+    stat_summary(fun.y = mean, geom = 'bar', position = 'dodge', color = 'black', width = .825) +
+    stat_summary(fun.data = mean_se, geom = 'errorbar', 
+                 position = position_dodge(width = .8), width = .2) + 
+  # label plot
+    ggtitle("Verbatim Questions") + # label plot
+    ylab('Proportion Correct')    + # y axis label
+    xlab('')                      + # deletes x axis label
+    scale_x_discrete(labels = c("Study\nOnly", "Concept\nMapping" ,"Retrieval\nPractice","CM+RP"))+
+  # color the bars
+    scale_fill_manual(values=c("#FF8682", "#FFB376", "#66bb6a","#64b5f6")) + 
+  # add means to bars using annotation function, requires dataTable of means and their columnName
+    annotations(E2verbMeans, "mean") +
+  # y axis limits and tick marks
+    coord_cartesian(ylim=c(0, 1.002)) + 
+    scale_y_continuous(expand = c(0,0), breaks=c(.0,.1,.2,.3,.4,.5,.6,.7,.8, .9, 1)) + 
+  # theme
+    PCLLABtheme 
+
+E2.verbPlot # preview plot 
+```
+
+## - Higher order performance
+```{r, results = "asis"}
+E2data$condition <- factor(E2data$condition, levels = c("Study", "CM", "RP", "CM+RP")) # change order of condition for plotting
+
+# create a table of means for plot annotations
+E2higherMeans <- E2data %>% 
+  group_by(condition) %>% 
+  summarize(mean = mean(higherProportion)) %>% 
+  mutate(mean = apa(mean,2,F)) %>%  # false removes leading zero   
+  droplevels()
+
+# create and store plot
+E2.higherPlot <- ggplot(data = E2data, aes(x = condition, y = higherProportion, fill = condition)) +
+  # ggplot code to create bar plots
+    stat_summary(fun.y = mean, geom = 'bar', position = 'dodge', color = 'black', width = .825) +
+    stat_summary(fun.data = mean_se, geom = 'errorbar',
+                 position = position_dodge(width = .8), width = .2) + 
+  # label plot
+    ggtitle("Inference Questions") + # label plot
+    ylab('Proportion Correct')     + # y axis label
+    xlab('')                       + # deletes x axis label
+    scale_x_discrete(labels = c("Study\nOnly", "Concept\nMapping" ,"Retrieval\nPractice","CM+RP"))+
+  # color the bars
+    scale_fill_manual(values=c("#FF8682", "#FFB376", "#66bb6a","#64b5f6")) + 
+  # add means to bars using annotation function, requires dataTable of means and their columnName
+    annotations(E2higherMeans, "mean") +
+  # y axis limits and tick marks
+    coord_cartesian(ylim=c(0, 1.002)) + 
+    scale_y_continuous(expand = c(0,0), breaks=c(.0,.1,.2,.3,.4,.5,.6,.7,.8, .9, 1)) + 
+  # theme
+    PCLLABtheme 
+
+E2.higherPlot # preview plot 
+```
+
+## - Recall performance
+```{r, results = "asis"}
+E2data$condition <- factor(E2data$condition, levels = c("Study", "CM", "RP", "CM+RP")) # change order of condition for plotting
+
+# create a table of means for plot annotations
+E2r3Means <- E2data %>% 
+  group_by(condition) %>% 
+  summarize(mean = mean(r3Proportion)) %>% 
+  mutate(mean = apa(mean,2,F)) %>%  # false removes leading zero   
+  droplevels()
+
+# create and store plot
+E2.recall3Plot <- ggplot(data = E2data, aes(x = condition, y = r3Proportion, fill = condition)) +
+  # ggplot code to create bar plots
+    stat_summary(fun.y = mean, geom = 'bar', position = 'dodge', color = 'black', width = .825) +
+    stat_summary(fun.data = mean_se, geom = 'errorbar', 
+                 position = position_dodge(width = .8), width = .2) + 
+  # label plot
+    ggtitle("Free Recall")     + # label plot
+    ylab('Proportion Correct') + # y axis label
+    xlab('')                   + # deletes x axis label
+    scale_x_discrete(labels = c("Study\nOnly", "Concept\nMapping" ,"Retrieval\nPractice","CM+RP")) +
+  # color the bars
+    scale_fill_manual(values=c("#FF8682", "#FFB376" ,"#66bb6a","#64b5f6")) + # CM color for E2 #
+  # add means to bars using annotation function, requires dataTable of means and their columnName
+    annotations(E2r3Means, "mean") +
+  # y axis limits and tick marks
+    coord_cartesian(ylim=c(0, 1.002)) + 
+    scale_y_continuous(expand = c(0,0), breaks=c(.0,.1,.2,.3,.4,.5,.6,.7,.8, .9, 1)) + 
+  # theme
+    PCLLABtheme 
+
+E2.recall3Plot # preview plot 
+```
+
+```{r include = F}
+# export plot
+  tiff("figures/Figure_2.tiff",
+       res=300,
+       compression = "lzw",
+       height = (2.75*3.5),
+       width = (6*3.5),
+       units="in")
+  grid.arrange(E2.verbPlot, E2.higherPlot, E2.recall3Plot, ncol = 3) # plot preview
+  dev.off()
+```
+
+# - Exploratory Analyses
+
+## - Input-output correspondence
+```{r, results = "asis"}
+# descriptives
+  kable(E2data %>% 
+    group_by(condition) %>% 
+    summarize(R1 = apa(mean(propForwardR1, na.rm = T),2), 
+              R2 = apa(mean(propForwardR2, na.rm = T),2), 
+              R3 = apa(mean(propForwardR3, na.rm = T),2)
+              ), caption = "means") %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+  kable(E2data %>% 
+    group_by(condition) %>% 
+    summarize(R1 = apa(sd(propForwardR1, na.rm = T)/sqrt(30),2), 
+              R2 = apa(sd(propForwardR2, na.rm = T)/sqrt(30),2), 
+              R3 = apa(sd(propForwardR3, na.rm = T)/sqrt(30),2)
+              ), caption = "ses") %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# R1
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% 
+                  mutate(condition = fct_relevel(condition, c("CM+RP","RP"))) %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "propForwardR1"       # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Proportion of Forward Transitions - Recall 1") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+  # R2
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP")  %>% 
+                  mutate(condition = fct_relevel(condition, c("CM+RP","RP"))) %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "propForwardR2"       # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Proportion of Forward Transitions - Recall 2") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# R3
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% 
+                  mutate(condition = fct_relevel(condition, c("CM+RP","RP"))) %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "propForwardR3"       # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "Proportion of Forward Transitions - Recall 3") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+### traditional ttest and Cohen's D
+
+# RP vs. Study Only
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(propForwardR1~condition, var.equal = T))
+ ci.smd(ncp = -1.2038, n.1 = 30, n.2 = 30 )
+
+# CM+RP vs. Study Only
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(propForwardR2~condition, var.equal = T))
+ ci.smd(ncp = -1.0639, n.1 = 30, n.2 = 30 )
+
+# RP vs. CM+RP
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(propForwardR3~condition, var.equal = T))
+ ci.smd(ncp = -0.38064, n.1 = 30, n.2 = 30 )
+```
+
+## - Conditional recall analysis
+```{r, results = "asis"}
+# descriptives
+  kable(E2data %>% 
+    filter(condition == "CM+RP" | condition == "RP") %>% 
+    group_by(condition) %>% 
+    summarize(CC = apa(mean(CC, na.rm = T),2), 
+              CN = apa(mean(CN, na.rm = T),2), 
+              NC = apa(mean(NC, na.rm = T),2),
+              NN = apa(mean(NN, na.rm = T),2)
+              ), caption = "means") %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+  kable(E2data %>% 
+    filter(condition == "CM+RP" | condition == "RP") %>% 
+    group_by(condition) %>% 
+    summarize(CC = apa(sd(CC, na.rm = T),2), 
+              CN = apa(sd(CN, na.rm = T),2), 
+              NC = apa(sd(NC, na.rm = T),2),
+              NN = apa(sd(NN, na.rm = T),2)
+              ), caption = "sds") %>% 
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# CC
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "CC"                  # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "CC") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+  # CN
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "CN"                  # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "CN") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+  
+# NC
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "NC"                  # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "NC") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+
+# NN
+  kable(effSize(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels()
+    , analysis = "between"            # within or between design
+    , dataFormat = "wide"             # long or wide data
+    , outcome = "NN"                  # the outcome variable
+    , predictor = "condition"         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = "NN") %>%
+    kable_styling("condensed", full_width = F, font_size = 14, position = "left")
+```
+
+```{r, include = F}
+### traditional ttest and Cohen's D
+
+# CC
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(CC~condition, var.equal = T))
+ ci.smd(ncp = 0.65765, n.1 = 30, n.2 = 30 )
+
+# CN
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(CN~condition, var.equal = T))
+ ci.smd(ncp = 2.264, n.1 = 30, n.2 = 30 )
+
+# NC
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(NC~condition, var.equal = T))
+ ci.smd(ncp = -3.4875, n.1 = 30, n.2 = 30 )
+ 
+# NN
+ with(data = E2data %>% filter(condition == "RP"| condition == "CM+RP") %>% droplevels(), t.test(NN~condition, var.equal = T))
+ ci.smd(ncp = 0.80851, n.1 = 30, n.2 = 30 ) 
+```

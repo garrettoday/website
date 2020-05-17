@@ -1,0 +1,3272 @@
+---
+title: "Data Analysis for O'Day and Karpicke (2020) E2"
+output: 
+  html_notebook:
+    toc: yes
+    toc_depth: 3
+    number_sections: true
+    code_folding: hide
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<div id="setting-up-r" class="section level1">
+<h1>- Setting up R</h1>
+<pre class="r"><code>rm(list = ls())     # clears R history and console for a tidy workspace
+options(scipen=999) # turns off scientific notation</code></pre>
+<div id="packages" class="section level2">
+<h2>- Packages</h2>
+<p><span style="color:red">if you do not already have the package you will need to use install.packages(“packageName”)</p>
+<pre class="r"><code>library(kableExtra)    # for pretty output
+library(gridExtra)     # for plotting two plots next to each other
+library(tidyverse)     # for data management</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::combine() masks gridExtra::combine()
+## ✖ dplyr::filter()  masks stats::filter()
+## ✖ dplyr::lag()     masks stats::lag()</code></pre>
+<pre class="r"><code>library(readxl)        # for reading excel files 
+library(MBESS)         # for effect size
+library(MOTE)          # for apa function for limiting decimals
+library(ez)            # for ANOVA</code></pre>
+</div>
+<div id="effect-size-function" class="section level2">
+<h2>- Effect size function</h2>
+<p>This function returns Cohen’s D in a neat format for a t-test analysis.</p>
+<p>This function requires:</p>
+<ul>
+<li>the type of analysis (between or within)</li>
+<li>the dataFrame, the dataFormat (long or wide)</li>
+<li>the name of the outcome and predictor variables or columns</li>
+<li>the sample size (between use n1 and n2; within use N).</li>
+</ul>
+<pre class="r"><code>effSize &lt;- function(analysis, dataFrame, dataFormat, outcome, predictor, n1, n2, N) {
+  
+  # get the column number for outcome and predictor variables
+  outcomeColumn = which(colnames(dataFrame) == outcome)     
+  predictorColumn = which(colnames(dataFrame) == predictor) 
+  
+  if (analysis == &quot;between&quot;) {
+    paired = F # do not do a paired t test for between subjects design
+  } else {
+    paired = T # do a paired t test for within subjects design
+  } 
+  
+  if (is.numeric(dataFrame[[predictorColumn]])) {
+    t &lt;- t.test(dataFrame[[outcomeColumn]],dataFrame[[predictorColumn]], 
+                paired = paired, var.equal = T)
+  } else {
+    t &lt;- t.test(dataFrame[[outcomeColumn]]~dataFrame[[predictorColumn]], 
+                paired = paired, var.equal = T)
+  }     
+  
+  
+  ncp &lt;- t$statistic
+  
+  if (analysis == &quot;between&quot;) {
+    df = n1 + n2 - 2
+    effectSize &lt;- ci.smd(ncp=ncp, n.1=n1, n.2=n2)
+    d          &lt;- apa(effectSize$smd, 2)
+    dlow       &lt;- apa(effectSize$Lower.Conf.Limit.smd,2)
+    dhigh      &lt;- apa(effectSize$Upper.Conf.Limit.smd,2)      
+  } else {
+    df = N - 1
+    effectSize &lt;- capture.output(ci.sm(ncp=ncp, N=N)) # prevents MBESS printing to output
+    d          &lt;- apa(as.numeric(substring(effectSize[7],0)),2)
+    dlow       &lt;- apa(as.numeric(substring(effectSize[3],5)),2)
+    dhigh      &lt;- apa(as.numeric(substring(effectSize[10],5)),2)
+  }
+  
+  p &lt;- apa(t$p.value,3)
+  t &lt;- apa(t$statistic,2)
+  
+  # create tidy output
+  summary &lt;- paste(&quot;t(&quot;,df,&quot;) = &quot;, t, &quot;, p = &quot;,p, &quot;,&quot;,
+                   &quot; d = &quot;, d, &quot; [&quot;, dlow, &quot;, &quot;, dhigh, &quot;]&quot;, sep=&quot;&quot;)
+  
+  names  &lt;- c(&quot;t&quot;,&quot;df&quot;,&quot;p&quot;,&quot;d&quot;,&quot;dlow&quot;,&quot;dhigh&quot;,&quot;summary&quot;)
+  values &lt;- c(t,df,p,d,dlow,dhigh,summary)
+  
+  output &lt;- rbind(names,values)
+  output &lt;- data.frame(names,values)
+  
+  output &lt;- output %&gt;% 
+    spread(key=names,value=values) %&gt;% 
+    select(&quot;t&quot;, &quot;df&quot;, &quot;p&quot;, &quot;d&quot;,&quot;dlow&quot;, &quot;dhigh&quot;,&quot;summary&quot;)
+  
+  return(output)
+}</code></pre>
+</div>
+<div id="annotation-function" class="section level2">
+<h2>- Annotation function</h2>
+<p>This function accepts name of data frame that has a column with mean values. For each row in the dataTable, go through columName, get each cell value and create an annotation for that value, add that annotation to a list.</p>
+<ul>
+<li>annotations will be added to graph in order they appear in dataTable</li>
+<li>columnName needs to be entered as a string (e.g., “mean”)</li>
+</ul>
+<pre class="r"><code>storage = list() # create storage container for use during looping
+
+annotations &lt;- function (dataTable, columnName) {
+    columnNumber = which(colnames(dataTable) == columnName)
+    for (i in 1:nrow(dataTable)) {
+      name &lt;- paste(&quot;A&quot;,i,sep=&quot;&quot;)
+      annotation &lt;- assign(name,annotate(&quot;text&quot;, x = i, y = 0.05, label = as.character(dataTable[i,columnNumber]), size = 9))
+      storage[i] &lt;- c(annotation)
+    }   
+    return(storage)
+}</code></pre>
+</div>
+<div id="plot-theme" class="section level2">
+<h2>- Plot theme</h2>
+<p>Custom theme that is added onto a ggplot object that makes nice looking plots</p>
+<pre class="r"><code>PCLLABtheme &lt;- 
+  theme(
+    # titles
+      plot.title   = element_text(size= 26, face = &quot;bold&quot;,margin=margin(0,0,8,0), hjust = 0.5),
+      axis.title.x = element_text(margin=margin(6,0,0,0)),
+      axis.title.y = element_text(size = 24, face = &quot;bold&quot;, margin=margin(0,10,0,0)),
+    # axes
+      axis.text.x = element_text(size = 23, colour=&quot;black&quot;, margin=margin(14,0,0,0,&quot;pt&quot;)),
+      axis.text.y = element_text(size = 24, colour=&quot;black&quot;, margin=margin(0,8,0,0,&quot;pt&quot;)),
+      axis.line   = element_line(colour = &quot;black&quot;),
+    # panel
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      panel.background = element_rect(fill = &quot;white&quot;),
+    # tick marks
+      axis.ticks.length = unit(-.2, &quot;cm&quot;),
+      axis.ticks.x      = element_blank(),
+      axis.ticks.y      = element_line(colour=&quot;black&quot;),
+    # legend
+      legend.position = &quot;none&quot; # removes legend
+    )</code></pre>
+</div>
+<div id="read-in-data" class="section level2">
+<h2>- Read in data</h2>
+<p><span style="color:red">Be sure to set your working directory to the appropriate place.</p>
+<p>I find it easiest to click on “Session” =&gt; “Set working directory” =&gt; “To File Source Location”.</p>
+<pre class="r"><code># list all of the files and folders in the data folder within the working directory
+  list.files(&quot;data&quot;) 
+  
+# read in data - note this is an xlsx file with multiple sheets
+  E2data &lt;- read_excel(&quot;data/finalData.CMRP.E2.xlsx&quot;, sheet = 2) </code></pre>
+</div>
+</div>
+<div id="demographics" class="section level1">
+<h1>- Demographics</h1>
+<pre class="r"><code># age
+  summary(E2data$age)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   18.00   19.00   20.00   19.95   21.00   33.00</code></pre>
+<pre class="r"><code>  sd(E2data$age)</code></pre>
+<pre><code>## [1] 2.061451</code></pre>
+<pre class="r"><code># age by condition
+  E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanAge = mean(age))</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   condition meanAge
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 CM           19.7
+## 2 CM+RP        20.1
+## 3 RP           20.0
+## 4 Study        20.1</code></pre>
+<pre class="r"><code># ANOVA - age
+  ezANOVA(
+      E2data
+      , age
+      , subNum
+      , between = condition
+      , type = 3
+      , detailed = T
+    )</code></pre>
+<pre><code>## Warning: Converting &quot;subNum&quot; to factor for ANOVA.</code></pre>
+<pre><code>## Warning: Converting &quot;condition&quot; to factor for ANOVA.</code></pre>
+<pre><code>## Coefficient covariances computed by hccm()</code></pre>
+<pre><code>## $ANOVA
+##        Effect DFn DFd     SSn   SSd            F
+## 1 (Intercept)   1 116 47760.3 502.2 11031.849462
+## 2   condition   3 116     3.5 502.2     0.269481
+##                                                                                                                               p
+## 1 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007455686
+## 2 0.847289967820771261486356706882361322641372680664062500000000000000000000000000000000000000000000000000000000000000000000000
+##   p&lt;.05         ges
+## 1     * 0.989594406
+## 2       0.006921099
+## 
+## $`Levene&#39;s Test for Homogeneity of Variance`
+##   DFn DFd      SSn      SSd         F         p p&lt;.05
+## 1   3 116 3.266667 320.4333 0.3941884 0.7574142</code></pre>
+<pre class="r"><code># gender
+  table(E2data$gender)</code></pre>
+<pre><code>## 
+## female   male 
+##     51     69</code></pre>
+<pre class="r"><code># gender by condition
+  table(E2data$condition,E2data$gender)</code></pre>
+<pre><code>##        
+##         female male
+##   CM        15   15
+##   CM+RP     13   17
+##   RP         9   21
+##   Study     14   16</code></pre>
+<pre class="r"><code>  chisq.test(table(E2data$condition,E2data$gender))</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  table(E2data$condition, E2data$gender)
+## X-squared = 2.8303, df = 3, p-value = 0.4185</code></pre>
+</div>
+<div id="concept-map-performance" class="section level1">
+<h1>- Concept map performance</h1>
+<pre class="r"><code># make condition CM+RP come first so that t value is positive
+  E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;CM+RP&quot;, &quot;CM&quot;,&quot;Study&quot;,&quot;RP&quot;)) 
+
+# descriptives
+  kable(E2data %&gt;% 
+          filter(condition == &quot;CM+RP&quot; | condition == &quot;CM&quot;) %&gt;% 
+          group_by(condition) %&gt;% 
+          summarize(meanMapPerf = apa(mean(map_score, na.rm = T) / 27, 2), 
+                    sdMapPerf   = apa(sd  (map_score, na.rm = T) / 27, 2)), align = &quot;c&quot;) %&gt;%
+          kable_styling(full_width = F, position = &quot;left&quot;, font_size = 14)</code></pre>
+<table class="table" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:center;">
+condition
+</th>
+<th style="text-align:center;">
+meanMapPerf
+</th>
+<th style="text-align:center;">
+sdMapPerf
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+CM+RP
+</td>
+<td style="text-align:center;">
+0.75
+</td>
+<td style="text-align:center;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+CM
+</td>
+<td style="text-align:center;">
+0.72
+</td>
+<td style="text-align:center;">
+0.13
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># effect size function
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot; | condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;map_score&quot;           # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for group 1 for between-subjects designs
+    , n2 = 30                         # sample size for group 2 for between-subjects designs
+    ), caption = &quot;Map performance - CM vs. CM+RP&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-8">Table 1: </span>Map performance - CM vs. CM+RP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.98
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.334
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+-0.26
+</td>
+<td style="text-align:left;">
+0.76
+</td>
+<td style="text-align:left;">
+t(58) = 0.98, p = 0.334, d = 0.25 [-0.26, 0.76]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="retrieval-practice-performance" class="section level1">
+<h1>- Retrieval practice performance</h1>
+<p>A 2 (condition: retrieval practice vs. CM+RP) X 2 (recall test: 1 or 2) mixed factorial ANOVA was conducted</p>
+<p>Retrieval practice performance was qualified by a significant recall number by condition interaction.</p>
+<pre class="r"><code># get data in correct format for ezANOVA
+  E2recallData &lt;- E2data %&gt;% 
+    filter(condition == &quot;RP&quot; | condition == &quot;CM+RP&quot;) %&gt;% # filter out study and CM
+    droplevels() %&gt;% # remove the conditions that were filtered out
+    select(subNum,condition,recall_1_score,recall_2_score) %&gt;% # select relevant columns
+    gather(key = recallNumber, value = recallScore, 3:4) %&gt;% # convert wide data to long
+    mutate(recallProportion = recallScore / 27) # convert score to proportion
+  
+# make subNum a factor for ezANOVA
+  E2recallData$subNum &lt;- as.factor(E2recallData$subNum)
+  
+# make recallNumber a factor for ezANOVA  
+  E2recallData$recallNumber &lt;- as.factor(E2recallData$recallNumber)
+  
+# make cond a factor for ezANOVA
+  E2recallData$condition &lt;- as.factor(E2recallData$condition)     
+  
+# ANOVA
+  recallAnova &lt;- ezANOVA(
+    E2recallData
+    , recallProportion
+    , subNum
+    , within = recallNumber
+    , between = condition
+    , type = 3
+    , detailed = T
+  )
+
+# make output from ANOVA a tidy data frame
+  anovaTable &lt;- data.frame(recallAnova) %&gt;% 
+    rename(&quot;predictor&quot; = 1, &quot;DFn&quot; = 2, &quot;DFd&quot; = 3, &quot;SSn&quot; = 4, 
+           &quot;SSd&quot; = 5, &quot;F&quot; = 6, &quot;p&quot; = 7, &quot;sig&quot; = 8, &quot;ges&quot; = 9) %&gt;% # rename columns
+    mutate(pes = SSn / (SSn + SSd)) %&gt;% # calculate partial eta squared 
+    mutate_if(is.numeric, round, digits = 3) # limit decimals to 3</code></pre>
+<pre class="r"><code># create a nice table
+  kable(anovaTable, align = &quot;c&quot;, booktabs = T) %&gt;% 
+      kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:center;">
+predictor
+</th>
+<th style="text-align:center;">
+DFn
+</th>
+<th style="text-align:center;">
+DFd
+</th>
+<th style="text-align:center;">
+SSn
+</th>
+<th style="text-align:center;">
+SSd
+</th>
+<th style="text-align:center;">
+F
+</th>
+<th style="text-align:center;">
+p
+</th>
+<th style="text-align:center;">
+sig
+</th>
+<th style="text-align:center;">
+ges
+</th>
+<th style="text-align:center;">
+pes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+58
+</td>
+<td style="text-align:center;">
+52.939
+</td>
+<td style="text-align:center;">
+3.443
+</td>
+<td style="text-align:center;">
+891.670
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+<ul>
+<li></td>
+<td style="text-align:center;">
+0.931
+</td>
+<td style="text-align:center;">
+0.939
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+condition
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+58
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+3.443
+</td>
+<td style="text-align:center;">
+0.009
+</td>
+<td style="text-align:center;">
+0.923
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+recallNumber
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+58
+</td>
+<td style="text-align:center;">
+0.761
+</td>
+<td style="text-align:center;">
+0.497
+</td>
+<td style="text-align:center;">
+88.864
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+<ul>
+<li></td>
+<td style="text-align:center;">
+0.162
+</td>
+<td style="text-align:center;">
+0.605
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+condition:recallNumber
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+58
+</td>
+<td style="text-align:center;">
+0.117
+</td>
+<td style="text-align:center;">
+0.497
+</td>
+<td style="text-align:center;">
+13.619
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+<ul>
+<li></td>
+<td style="text-align:center;">
+0.029
+</td>
+<td style="text-align:center;">
+0.190
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="recall-1" class="section level2">
+<h2>- Recall 1</h2>
+<pre class="r"><code># filter out recall 2
+  E2R1data &lt;- E2recallData %&gt;% 
+    filter(recallNumber == &quot;recall_1_score&quot;) 
+  
+# descriptives
+  kable(E2R1data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanR1 = apa(mean(recallProportion),2), sdR1 = apa(sd(recallProportion),2))) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+meanR1
+</th>
+<th style="text-align:left;">
+sdR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.61
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.56
+</td>
+<td style="text-align:left;">
+0.21
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># effect size function
+  kable(effSize(data = E2R1data
+    , analysis = &quot;between&quot;            # within or between
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;recallProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for group 1 for between-subjects designs
+    , n2 = 30                         # sample size for group 2 for between-subjects designs
+    ), caption = &quot;Recall 1 - CM+RP vs. RP&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-12">Table 2: </span>Recall 1 - CM+RP vs. RP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1.17
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.246
+</td>
+<td style="text-align:left;">
+0.30
+</td>
+<td style="text-align:left;">
+-0.21
+</td>
+<td style="text-align:left;">
+0.81
+</td>
+<td style="text-align:left;">
+t(58) = 1.17, p = 0.246, d = 0.30 [-0.21, 0.81]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="recall-2" class="section level2">
+<h2>- Recall 2</h2>
+<pre class="r"><code># filter out recall 2
+  E2R2data &lt;- E2recallData %&gt;% 
+    filter(recallNumber == &quot;recall_2_score&quot;) 
+  
+# make condition CM+RP first
+  E2R2data$condition &lt;- factor(E2R2data$condition, levels = c(&quot;CM+RP&quot;, &quot;RP&quot;)) 
+  
+# descriptives
+  kable(E2R2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanR1 = apa(mean(recallProportion),2), sdR1 = apa(sd(recallProportion),2))) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+meanR1
+</th>
+<th style="text-align:left;">
+sdR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.71
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.78
+</td>
+<td style="text-align:left;">
+0.19
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># effect size function
+  kable(effSize(data = E2R2data
+    , analysis = &quot;between&quot;            # within or between
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;recallProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for group 1 for between-subjects designs
+    , n2 = 30                         # sample size for group 2 for between-subjects designs
+    ), caption = &quot;Recall 2 - RP vs. CM+RP&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-14">Table 3: </span>Recall 2 - RP vs. CM+RP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-1.46
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.149
+</td>
+<td style="text-align:left;">
+-0.38
+</td>
+<td style="text-align:left;">
+-0.89
+</td>
+<td style="text-align:left;">
+0.13
+</td>
+<td style="text-align:left;">
+t(58) = -1.46, p = 0.149, d = -0.38 [-0.89, 0.13]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="judgments-of-learning" class="section level1">
+<h1>- Judgments of Learning</h1>
+<pre class="r"><code># ANOVA
+  E2data$subNum    &lt;- as.factor(E2data$subNum)    # convert to factor for ANOVA
+  E2data$condition &lt;- as.factor(E2data$condition) # convert to factor for ANOVA
+
+  jolAnova &lt;- ezANOVA(
+    E2data
+    , JOL
+    , subNum
+    , between = condition
+    , type = 3
+    , detailed = T
+  )</code></pre>
+<pre><code>## Coefficient covariances computed by hccm()</code></pre>
+<pre class="r"><code># make output from ANOVA a tidy data frame
+  jolAnovaTable &lt;- data.frame(jolAnova) %&gt;% 
+    select(1:9) %&gt;% 
+    rename(&quot;predictor&quot; = 1, &quot;DFn&quot; = 2, &quot;DFd&quot; = 3, &quot;SSn&quot; = 4, 
+           &quot;SSd&quot; = 5, &quot;F&quot; = 6, &quot;p&quot; = 7, &quot;sig&quot; = 8, &quot;ges&quot; = 9) %&gt;% # rename columns
+    mutate(pes = SSn / (SSn + SSd)) %&gt;% # calculate partial eta squared 
+    mutate_if(is.numeric, round, digits = 3) # limit decimals to 3</code></pre>
+<pre class="r"><code># descriptives
+  kable(E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanJOL = apa(mean(JOL),2), sdJOL2 = apa(sd(JOL),2))) %&gt;% 
+    kable_styling(bootstrap_options = &quot;condensed&quot;, full_width = F, position = &quot;left&quot;, font_size = 14)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+meanJOL
+</th>
+<th style="text-align:left;">
+sdJOL2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.64
+</td>
+<td style="text-align:left;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM
+</td>
+<td style="text-align:left;">
+0.71
+</td>
+<td style="text-align:left;">
+0.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Study
+</td>
+<td style="text-align:left;">
+0.67
+</td>
+<td style="text-align:left;">
+0.24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.61
+</td>
+<td style="text-align:left;">
+0.23
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># create a nice table
+  kable(jolAnovaTable, align = &quot;c&quot;, booktabs = T) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:center;">
+predictor
+</th>
+<th style="text-align:center;">
+DFn
+</th>
+<th style="text-align:center;">
+DFd
+</th>
+<th style="text-align:center;">
+SSn
+</th>
+<th style="text-align:center;">
+SSd
+</th>
+<th style="text-align:center;">
+F
+</th>
+<th style="text-align:center;">
+p
+</th>
+<th style="text-align:center;">
+sig
+</th>
+<th style="text-align:center;">
+ges
+</th>
+<th style="text-align:center;">
+pes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+116
+</td>
+<td style="text-align:center;">
+51.614
+</td>
+<td style="text-align:center;">
+5.63
+</td>
+<td style="text-align:center;">
+1063.389
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+<ul>
+<li></td>
+<td style="text-align:center;">
+0.902
+</td>
+<td style="text-align:center;">
+0.902
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+condition
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+116
+</td>
+<td style="text-align:center;">
+0.166
+</td>
+<td style="text-align:center;">
+5.63
+</td>
+<td style="text-align:center;">
+1.137
+</td>
+<td style="text-align:center;">
+0.337
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.029
+</td>
+<td style="text-align:center;">
+0.029
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<p>There were no significant differences in the JOLs.</p>
+</div>
+<div id="test-performance" class="section level1">
+<h1>- Test performance</h1>
+<div id="verbatim-questions" class="section level2">
+<h2>- Verbatim questions</h2>
+<pre class="r"><code># convert score to proportion
+  E2data$verbProportion &lt;- E2data$SA_verbatim / 10
+  
+# change order of conditions so t values are positive
+  E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;CM+RP&quot;, &quot;RP&quot;, &quot;CM&quot;, &quot;Study&quot;))
+  
+# descriptives
+  kable(E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanVerbProportion = apa(mean(verbProportion),2), 
+              sdVerbProportion = apa(sd(verbProportion),2))) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+meanVerbProportion
+</th>
+<th style="text-align:left;">
+sdVerbProportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.78
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.83
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM
+</td>
+<td style="text-align:left;">
+0.55
+</td>
+<td style="text-align:left;">
+0.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Study
+</td>
+<td style="text-align:left;">
+0.41
+</td>
+<td style="text-align:left;">
+0.26
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs. Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;verbProportion&quot;      # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Verbatim - RP vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-18">Table 4: </span>Verbatim - RP vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+7.93
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+2.05
+</td>
+<td style="text-align:left;">
+1.41
+</td>
+<td style="text-align:left;">
+2.67
+</td>
+<td style="text-align:left;">
+t(58) = 7.93, p = 0.000, d = 2.05 [1.41, 2.67]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM+RP vs Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;verbProportion&quot;      # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Verbatim - CM+RP vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-18">Table 4: </span>Verbatim - CM+RP vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+6.95
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.79
+</td>
+<td style="text-align:left;">
+1.19
+</td>
+<td style="text-align:left;">
+2.39
+</td>
+<td style="text-align:left;">
+t(58) = 6.95, p = 0.000, d = 1.79 [1.19, 2.39]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM vs Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;verbProportion&quot;      # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Verbatim - CM vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)  </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-18">Table 4: </span>Verbatim - CM vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2.27
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.027
+</td>
+<td style="text-align:left;">
+0.59
+</td>
+<td style="text-align:left;">
+0.07
+</td>
+<td style="text-align:left;">
+1.10
+</td>
+<td style="text-align:left;">
+t(58) = 2.27, p = 0.027, d = 0.59 [0.07, 1.10]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs CM
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;verbProportion&quot;      # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Verbatim - RP vs. CM&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)    </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-18">Table 4: </span>Verbatim - RP vs. CM
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+5.88
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.52
+</td>
+<td style="text-align:left;">
+0.94
+</td>
+<td style="text-align:left;">
+2.09
+</td>
+<td style="text-align:left;">
+t(58) = 5.88, p = 0.000, d = 1.52 [0.94, 2.09]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM+RP vs CM
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot;| condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;verbProportion&quot;      # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Verbatim - CM+RP vs. CM&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)  </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-18">Table 4: </span>Verbatim - CM+RP vs. CM
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+4.79
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.24
+</td>
+<td style="text-align:left;">
+0.68
+</td>
+<td style="text-align:left;">
+1.79
+</td>
+<td style="text-align:left;">
+t(58) = 4.79, p = 0.000, d = 1.24 [0.68, 1.79]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs. CM+RP
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;verbProportion&quot;      # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Verbatim - RP vs. CM+RP&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-18">Table 4: </span>Verbatim - RP vs. CM+RP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-1.44
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.156
+</td>
+<td style="text-align:left;">
+-0.37
+</td>
+<td style="text-align:left;">
+-0.88
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+<td style="text-align:left;">
+t(58) = -1.44, p = 0.156, d = -0.37 [-0.88, 0.14]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="higher-order-questions" class="section level2">
+<h2>- Higher order questions</h2>
+<pre class="r"><code># convert score to proportion
+  E2data$higherProportion &lt;- E2data$SA_inference / 4 
+  
+# change order of conditions so t values are positive
+  E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;CM+RP&quot;, &quot;RP&quot;, &quot;CM&quot;, &quot;Study&quot;))
+  
+# descriptives
+  kable(E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanhigherProportion = apa(mean(higherProportion),2), 
+              sdhigherProportion = apa(sd(higherProportion),2))) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+meanhigherProportion
+</th>
+<th style="text-align:left;">
+sdhigherProportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.79
+</td>
+<td style="text-align:left;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.84
+</td>
+<td style="text-align:left;">
+0.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM
+</td>
+<td style="text-align:left;">
+0.65
+</td>
+<td style="text-align:left;">
+0.27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Study
+</td>
+<td style="text-align:left;">
+0.55
+</td>
+<td style="text-align:left;">
+0.30
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs. Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;higherProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Higher Order - RP vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-20">Table 5: </span>Higher Order - RP vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+4.83
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.25
+</td>
+<td style="text-align:left;">
+0.69
+</td>
+<td style="text-align:left;">
+1.80
+</td>
+<td style="text-align:left;">
+t(58) = 4.83, p = 0.000, d = 1.25 [0.69, 1.80]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM+RP vs Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;higherProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Higher Order - CM+RP vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-20">Table 5: </span>Higher Order - CM+RP vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3.75
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+0.97
+</td>
+<td style="text-align:left;">
+0.43
+</td>
+<td style="text-align:left;">
+1.50
+</td>
+<td style="text-align:left;">
+t(58) = 3.75, p = 0.000, d = 0.97 [0.43, 1.50]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM vs Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;higherProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Higher Order - CM vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)  </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-20">Table 5: </span>Higher Order - CM vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1.49
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.142
+</td>
+<td style="text-align:left;">
+0.38
+</td>
+<td style="text-align:left;">
+-0.13
+</td>
+<td style="text-align:left;">
+0.89
+</td>
+<td style="text-align:left;">
+t(58) = 1.49, p = 0.142, d = 0.38 [-0.13, 0.89]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs CM
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;higherProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Higher Order - RP vs. CM&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)    </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-20">Table 5: </span>Higher Order - RP vs. CM
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3.30
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.002
+</td>
+<td style="text-align:left;">
+0.85
+</td>
+<td style="text-align:left;">
+0.32
+</td>
+<td style="text-align:left;">
+1.38
+</td>
+<td style="text-align:left;">
+t(58) = 3.30, p = 0.002, d = 0.85 [0.32, 1.38]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM+RP vs CM
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot;| condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;higherProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Higher Order - CM+RP vs. CM&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)  </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-20">Table 5: </span>Higher Order - CM+RP vs. CM
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2.23
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.030
+</td>
+<td style="text-align:left;">
+0.57
+</td>
+<td style="text-align:left;">
+0.06
+</td>
+<td style="text-align:left;">
+1.09
+</td>
+<td style="text-align:left;">
+t(58) = 2.23, p = 0.030, d = 0.57 [0.06, 1.09]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs. CM+RP
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;higherProportion&quot;    # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Higher Order - RP vs. CM+RP&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-20">Table 5: </span>Higher Order - RP vs. CM+RP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-1.13
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.262
+</td>
+<td style="text-align:left;">
+-0.29
+</td>
+<td style="text-align:left;">
+-0.80
+</td>
+<td style="text-align:left;">
+0.22
+</td>
+<td style="text-align:left;">
+t(58) = -1.13, p = 0.262, d = -0.29 [-0.80, 0.22]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="final-recall" class="section level2">
+<h2>- Final recall</h2>
+<pre class="r"><code># change order of conditions so t values are positive
+  E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;CM+RP&quot;, &quot;RP&quot;, &quot;CM&quot;, &quot;Study&quot;)) 
+  
+# convert score to proportion
+  E2data$r3Proportion &lt;- E2data$recall_3_score / 27
+
+# descriptives
+  kable(E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(meanR3Proportion = apa(mean(r3Proportion),2), 
+              sdR3Proportion   = apa(sd  (r3Proportion),2))) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+meanR3Proportion
+</th>
+<th style="text-align:left;">
+sdR3Proportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.58
+</td>
+<td style="text-align:left;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.65
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM
+</td>
+<td style="text-align:left;">
+0.38
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Study
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs. Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;r3Proportion&quot;        # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Final recall - RP vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-22">Table 6: </span>Final recall - RP vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+9.00
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+2.32
+</td>
+<td style="text-align:left;">
+1.66
+</td>
+<td style="text-align:left;">
+2.98
+</td>
+<td style="text-align:left;">
+t(58) = 9.00, p = 0.000, d = 2.32 [1.66, 2.98]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM+RP vs Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;r3Proportion&quot;        # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Final recall - CM+RP vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-22">Table 6: </span>Final recall - CM+RP vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+7.06
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.82
+</td>
+<td style="text-align:left;">
+1.21
+</td>
+<td style="text-align:left;">
+2.42
+</td>
+<td style="text-align:left;">
+t(58) = 7.06, p = 0.000, d = 1.82 [1.21, 2.42]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM vs Study Only
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM&quot;| condition == &quot;Study&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;r3Proportion&quot;        # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Final recall - CM vs. Study&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)  </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-22">Table 6: </span>Final recall - CM vs. Study
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3.02
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.004
+</td>
+<td style="text-align:left;">
+0.78
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+1.30
+</td>
+<td style="text-align:left;">
+t(58) = 3.02, p = 0.004, d = 0.78 [0.25, 1.30]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs CM
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;r3Proportion&quot;        # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Final recall - RP vs. CM&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)    </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-22">Table 6: </span>Final recall - RP vs. CM
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+5.96
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.54
+</td>
+<td style="text-align:left;">
+0.96
+</td>
+<td style="text-align:left;">
+2.11
+</td>
+<td style="text-align:left;">
+t(58) = 5.96, p = 0.000, d = 1.54 [0.96, 2.11]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CM+RP vs CM
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;CM+RP&quot;| condition == &quot;CM&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;r3Proportion&quot;        # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Final recall - CM+RP vs. CM&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)  </code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-22">Table 6: </span>Final recall - CM+RP vs. CM
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+4.19
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+1.08
+</td>
+<td style="text-align:left;">
+0.54
+</td>
+<td style="text-align:left;">
+1.62
+</td>
+<td style="text-align:left;">
+t(58) = 4.19, p = 0.000, d = 1.08 [0.54, 1.62]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># RP vs. CM+RP
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;long&quot;             # long or wide data
+    , outcome = &quot;r3Proportion&quot;        # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Final recall - RP vs. CM+RP&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-22">Table 6: </span>Final recall - RP vs. CM+RP
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-1.46
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.151
+</td>
+<td style="text-align:left;">
+-0.38
+</td>
+<td style="text-align:left;">
+-0.89
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+<td style="text-align:left;">
+t(58) = -1.46, p = 0.151, d = -0.38 [-0.89, 0.14]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="figure-2" class="section level1">
+<h1>- Figure 2</h1>
+<div id="verbatim-performance" class="section level2">
+<h2>- Verbatim performance</h2>
+<pre class="r"><code>E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;Study&quot;, &quot;CM&quot;, &quot;RP&quot;, &quot;CM+RP&quot;)) # change order of condition for plotting
+
+# create a table of means for plot annotations
+E2verbMeans &lt;- E2data %&gt;% 
+  group_by(condition) %&gt;% 
+  summarize(mean = mean(verbProportion)) %&gt;% 
+  mutate(mean = apa(mean,2,F)) %&gt;%  # false removes leading zero   
+  droplevels()
+
+# create and store plot
+E2.verbPlot &lt;- ggplot(data = E2data, aes(x = condition, y = verbProportion, fill = condition)) +
+  # ggplot code to create bar plots
+    stat_summary(fun.y = mean, geom = &#39;bar&#39;, position = &#39;dodge&#39;, color = &#39;black&#39;, width = .825) +
+    stat_summary(fun.data = mean_se, geom = &#39;errorbar&#39;, 
+                 position = position_dodge(width = .8), width = .2) + 
+  # label plot
+    ggtitle(&quot;Verbatim Questions&quot;) + # label plot
+    ylab(&#39;Proportion Correct&#39;)    + # y axis label
+    xlab(&#39;&#39;)                      + # deletes x axis label
+    scale_x_discrete(labels = c(&quot;Study\nOnly&quot;, &quot;Concept\nMapping&quot; ,&quot;Retrieval\nPractice&quot;,&quot;CM+RP&quot;))+
+  # color the bars
+    scale_fill_manual(values=c(&quot;#FF8682&quot;, &quot;#FFB376&quot;, &quot;#66bb6a&quot;,&quot;#64b5f6&quot;)) + 
+  # add means to bars using annotation function, requires dataTable of means and their columnName
+    annotations(E2verbMeans, &quot;mean&quot;) +
+  # y axis limits and tick marks
+    coord_cartesian(ylim=c(0, 1.002)) + 
+    scale_y_continuous(expand = c(0,0), breaks=c(.0,.1,.2,.3,.4,.5,.6,.7,.8, .9, 1)) + 
+  # theme
+    PCLLABtheme 
+
+E2.verbPlot # preview plot </code></pre>
+<p><img src="/projects/ODay_Karpicke_JEdPsych_2020/analysis.E2.CMRP_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="higher-order-performance" class="section level2">
+<h2>- Higher order performance</h2>
+<pre class="r"><code>E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;Study&quot;, &quot;CM&quot;, &quot;RP&quot;, &quot;CM+RP&quot;)) # change order of condition for plotting
+
+# create a table of means for plot annotations
+E2higherMeans &lt;- E2data %&gt;% 
+  group_by(condition) %&gt;% 
+  summarize(mean = mean(higherProportion)) %&gt;% 
+  mutate(mean = apa(mean,2,F)) %&gt;%  # false removes leading zero   
+  droplevels()
+
+# create and store plot
+E2.higherPlot &lt;- ggplot(data = E2data, aes(x = condition, y = higherProportion, fill = condition)) +
+  # ggplot code to create bar plots
+    stat_summary(fun.y = mean, geom = &#39;bar&#39;, position = &#39;dodge&#39;, color = &#39;black&#39;, width = .825) +
+    stat_summary(fun.data = mean_se, geom = &#39;errorbar&#39;,
+                 position = position_dodge(width = .8), width = .2) + 
+  # label plot
+    ggtitle(&quot;Inference Questions&quot;) + # label plot
+    ylab(&#39;Proportion Correct&#39;)     + # y axis label
+    xlab(&#39;&#39;)                       + # deletes x axis label
+    scale_x_discrete(labels = c(&quot;Study\nOnly&quot;, &quot;Concept\nMapping&quot; ,&quot;Retrieval\nPractice&quot;,&quot;CM+RP&quot;))+
+  # color the bars
+    scale_fill_manual(values=c(&quot;#FF8682&quot;, &quot;#FFB376&quot;, &quot;#66bb6a&quot;,&quot;#64b5f6&quot;)) + 
+  # add means to bars using annotation function, requires dataTable of means and their columnName
+    annotations(E2higherMeans, &quot;mean&quot;) +
+  # y axis limits and tick marks
+    coord_cartesian(ylim=c(0, 1.002)) + 
+    scale_y_continuous(expand = c(0,0), breaks=c(.0,.1,.2,.3,.4,.5,.6,.7,.8, .9, 1)) + 
+  # theme
+    PCLLABtheme 
+
+E2.higherPlot # preview plot </code></pre>
+<p><img src="/projects/ODay_Karpicke_JEdPsych_2020/analysis.E2.CMRP_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="recall-performance" class="section level2">
+<h2>- Recall performance</h2>
+<pre class="r"><code>E2data$condition &lt;- factor(E2data$condition, levels = c(&quot;Study&quot;, &quot;CM&quot;, &quot;RP&quot;, &quot;CM+RP&quot;)) # change order of condition for plotting
+
+# create a table of means for plot annotations
+E2r3Means &lt;- E2data %&gt;% 
+  group_by(condition) %&gt;% 
+  summarize(mean = mean(r3Proportion)) %&gt;% 
+  mutate(mean = apa(mean,2,F)) %&gt;%  # false removes leading zero   
+  droplevels()
+
+# create and store plot
+E2.recall3Plot &lt;- ggplot(data = E2data, aes(x = condition, y = r3Proportion, fill = condition)) +
+  # ggplot code to create bar plots
+    stat_summary(fun.y = mean, geom = &#39;bar&#39;, position = &#39;dodge&#39;, color = &#39;black&#39;, width = .825) +
+    stat_summary(fun.data = mean_se, geom = &#39;errorbar&#39;, 
+                 position = position_dodge(width = .8), width = .2) + 
+  # label plot
+    ggtitle(&quot;Free Recall&quot;)     + # label plot
+    ylab(&#39;Proportion Correct&#39;) + # y axis label
+    xlab(&#39;&#39;)                   + # deletes x axis label
+    scale_x_discrete(labels = c(&quot;Study\nOnly&quot;, &quot;Concept\nMapping&quot; ,&quot;Retrieval\nPractice&quot;,&quot;CM+RP&quot;)) +
+  # color the bars
+    scale_fill_manual(values=c(&quot;#FF8682&quot;, &quot;#FFB376&quot; ,&quot;#66bb6a&quot;,&quot;#64b5f6&quot;)) + # CM color for E2 #
+  # add means to bars using annotation function, requires dataTable of means and their columnName
+    annotations(E2r3Means, &quot;mean&quot;) +
+  # y axis limits and tick marks
+    coord_cartesian(ylim=c(0, 1.002)) + 
+    scale_y_continuous(expand = c(0,0), breaks=c(.0,.1,.2,.3,.4,.5,.6,.7,.8, .9, 1)) + 
+  # theme
+    PCLLABtheme 
+
+E2.recall3Plot # preview plot </code></pre>
+<p><img src="/projects/ODay_Karpicke_JEdPsych_2020/analysis.E2.CMRP_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+</div>
+<div id="exploratory-analyses" class="section level1">
+<h1>- Exploratory Analyses</h1>
+<div id="input-output-correspondence" class="section level2">
+<h2>- Input-output correspondence</h2>
+<pre class="r"><code># descriptives
+  kable(E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(R1 = apa(mean(propForwardR1, na.rm = T),2), 
+              R2 = apa(mean(propForwardR2, na.rm = T),2), 
+              R3 = apa(mean(propForwardR3, na.rm = T),2)
+              ), caption = &quot;means&quot;) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-28">Table 7: </span>means
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+R1
+</th>
+<th style="text-align:left;">
+R2
+</th>
+<th style="text-align:left;">
+R3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Study
+</td>
+<td style="text-align:left;">
+NaN
+</td>
+<td style="text-align:left;">
+NaN
+</td>
+<td style="text-align:left;">
+0.85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM
+</td>
+<td style="text-align:left;">
+NaN
+</td>
+<td style="text-align:left;">
+NaN
+</td>
+<td style="text-align:left;">
+0.86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.90
+</td>
+<td style="text-align:left;">
+0.93
+</td>
+<td style="text-align:left;">
+0.92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.87
+</td>
+<td style="text-align:left;">
+0.91
+</td>
+<td style="text-align:left;">
+0.91
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>  kable(E2data %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(R1 = apa(sd(propForwardR1, na.rm = T)/sqrt(30),2), 
+              R2 = apa(sd(propForwardR2, na.rm = T)/sqrt(30),2), 
+              R3 = apa(sd(propForwardR3, na.rm = T)/sqrt(30),2)
+              ), caption = &quot;ses&quot;) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-28">Table 7: </span>ses
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+R1
+</th>
+<th style="text-align:left;">
+R2
+</th>
+<th style="text-align:left;">
+R3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Study
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.02
+</td>
+<td style="text-align:left;">
+0.02
+</td>
+<td style="text-align:left;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.02
+</td>
+<td style="text-align:left;">
+0.01
+</td>
+<td style="text-align:left;">
+0.01
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># R1
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% 
+                  mutate(condition = fct_relevel(condition, c(&quot;CM+RP&quot;,&quot;RP&quot;))) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;propForwardR1&quot;       # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Proportion of Forward Transitions - Recall 1&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-28">Table 7: </span>Proportion of Forward Transitions - Recall 1
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-1.20
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.234
+</td>
+<td style="text-align:left;">
+-0.31
+</td>
+<td style="text-align:left;">
+-0.82
+</td>
+<td style="text-align:left;">
+0.20
+</td>
+<td style="text-align:left;">
+t(58) = -1.20, p = 0.234, d = -0.31 [-0.82, 0.20]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>  # R2
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;)  %&gt;% 
+                  mutate(condition = fct_relevel(condition, c(&quot;CM+RP&quot;,&quot;RP&quot;))) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;propForwardR2&quot;       # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Proportion of Forward Transitions - Recall 2&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-28">Table 7: </span>Proportion of Forward Transitions - Recall 2
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-1.06
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.292
+</td>
+<td style="text-align:left;">
+-0.27
+</td>
+<td style="text-align:left;">
+-0.78
+</td>
+<td style="text-align:left;">
+0.23
+</td>
+<td style="text-align:left;">
+t(58) = -1.06, p = 0.292, d = -0.27 [-0.78, 0.23]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># R3
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% 
+                  mutate(condition = fct_relevel(condition, c(&quot;CM+RP&quot;,&quot;RP&quot;))) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;propForwardR3&quot;       # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;Proportion of Forward Transitions - Recall 3&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-28">Table 7: </span>Proportion of Forward Transitions - Recall 3
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-0.38
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.705
+</td>
+<td style="text-align:left;">
+-0.10
+</td>
+<td style="text-align:left;">
+-0.60
+</td>
+<td style="text-align:left;">
+0.41
+</td>
+<td style="text-align:left;">
+t(58) = -0.38, p = 0.705, d = -0.10 [-0.60, 0.41]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="conditional-recall-analysis" class="section level2">
+<h2>- Conditional recall analysis</h2>
+<pre class="r"><code># descriptives
+  kable(E2data %&gt;% 
+    filter(condition == &quot;CM+RP&quot; | condition == &quot;RP&quot;) %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(CC = apa(mean(CC, na.rm = T),2), 
+              CN = apa(mean(CN, na.rm = T),2), 
+              NC = apa(mean(NC, na.rm = T),2),
+              NN = apa(mean(NN, na.rm = T),2)
+              ), caption = &quot;means&quot;) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-30">Table 8: </span>means
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+CC
+</th>
+<th style="text-align:left;">
+CN
+</th>
+<th style="text-align:left;">
+NC
+</th>
+<th style="text-align:left;">
+NN
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.56
+</td>
+<td style="text-align:left;">
+0.03
+</td>
+<td style="text-align:left;">
+0.24
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.60
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+<td style="text-align:left;">
+0.21
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>  kable(E2data %&gt;% 
+    filter(condition == &quot;CM+RP&quot; | condition == &quot;RP&quot;) %&gt;% 
+    group_by(condition) %&gt;% 
+    summarize(CC = apa(sd(CC, na.rm = T),2), 
+              CN = apa(sd(CN, na.rm = T),2), 
+              NC = apa(sd(NC, na.rm = T),2),
+              NN = apa(sd(NN, na.rm = T),2)
+              ), caption = &quot;sds&quot;) %&gt;% 
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-30">Table 8: </span>sds
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:left;">
+CC
+</th>
+<th style="text-align:left;">
+CN
+</th>
+<th style="text-align:left;">
+NC
+</th>
+<th style="text-align:left;">
+NN
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RP
+</td>
+<td style="text-align:left;">
+0.22
+</td>
+<td style="text-align:left;">
+0.03
+</td>
+<td style="text-align:left;">
+0.12
+</td>
+<td style="text-align:left;">
+0.16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CM+RP
+</td>
+<td style="text-align:left;">
+0.19
+</td>
+<td style="text-align:left;">
+0.06
+</td>
+<td style="text-align:left;">
+0.09
+</td>
+<td style="text-align:left;">
+0.16
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># CC
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;CC&quot;                  # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;CC&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-30">Table 8: </span>CC
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-0.66
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.513
+</td>
+<td style="text-align:left;">
+-0.17
+</td>
+<td style="text-align:left;">
+-0.68
+</td>
+<td style="text-align:left;">
+0.34
+</td>
+<td style="text-align:left;">
+t(58) = -0.66, p = 0.513, d = -0.17 [-0.68, 0.34]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>  # CN
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;CN&quot;                  # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;CN&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-30">Table 8: </span>CN
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-2.26
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.027
+</td>
+<td style="text-align:left;">
+-0.58
+</td>
+<td style="text-align:left;">
+-1.10
+</td>
+<td style="text-align:left;">
+-0.07
+</td>
+<td style="text-align:left;">
+t(58) = -2.26, p = 0.027, d = -0.58 [-1.10, -0.07]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># NC
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;NC&quot;                  # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;NC&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-30">Table 8: </span>NC
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3.49
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:left;">
+0.90
+</td>
+<td style="text-align:left;">
+0.37
+</td>
+<td style="text-align:left;">
+1.43
+</td>
+<td style="text-align:left;">
+t(58) = 3.49, p = 0.001, d = 0.90 [0.37, 1.43]
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># NN
+  kable(effSize(data = E2data %&gt;% filter(condition == &quot;RP&quot;| condition == &quot;CM+RP&quot;) %&gt;% droplevels()
+    , analysis = &quot;between&quot;            # within or between design
+    , dataFormat = &quot;wide&quot;             # long or wide data
+    , outcome = &quot;NN&quot;                  # the outcome variable
+    , predictor = &quot;condition&quot;         # the predictor predictor variable
+    , n1 = 30                         # sample size for between-group designs
+    , n2 = 30                         # sample size for between-group designs
+    ), caption = &quot;NN&quot;) %&gt;%
+    kable_styling(&quot;condensed&quot;, full_width = F, font_size = 14, position = &quot;left&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 14px; width: auto !important; ">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-30">Table 8: </span>NN
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+t
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+d
+</th>
+<th style="text-align:left;">
+dlow
+</th>
+<th style="text-align:left;">
+dhigh
+</th>
+<th style="text-align:left;">
+summary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+-0.81
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+0.422
+</td>
+<td style="text-align:left;">
+-0.21
+</td>
+<td style="text-align:left;">
+-0.72
+</td>
+<td style="text-align:left;">
+0.30
+</td>
+<td style="text-align:left;">
+t(58) = -0.81, p = 0.422, d = -0.21 [-0.72, 0.30]
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>

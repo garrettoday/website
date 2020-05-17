@@ -87,11 +87,29 @@
   </url>
   
   <url>
+    <loc>/projects/oday_karpicke_jedpsych_2020/analysis.e1.cmrp.nb/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/projects/oday_karpicke_jedpsych_2020/analysis.e2.cmrp.nb/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/projects/</loc>
   </url>
   
   <url>
     <loc>/research/</loc>
+  </url>
+  
+  <url>
+    <loc>/projects/oday_karpicke_jedpsych_2020/analysis.e1.cmrp/</loc>
+  </url>
+  
+  <url>
+    <loc>/projects/oday_karpicke_jedpsych_2020/analysis.e2.cmrp/</loc>
   </url>
   
   <url>
